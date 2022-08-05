@@ -48,6 +48,9 @@ public class RecordTest extends TestCase {
         assertEquals(aRec.compareTo(recToBeCompared), 0);
         Record bRec = new Record(bBite);
         assertEquals(aRec.compareTo(bRec), 1);
+        for (int a = 5; a > 0; a --) {
+            System.out.print(a);
+        }
     }
 
 }

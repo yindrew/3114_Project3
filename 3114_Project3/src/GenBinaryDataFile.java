@@ -1,23 +1,36 @@
-
-/**
- * Generate a data file. The size is a multiple of 8192 bytes.
- * Each record is one long and one double.
- */
-
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ * Generate a data file. The size is a multiple of 8192 bytes.
+ * Each record is one long and one double.
+ * 
+ * @author given
+ * @version 0.1
+ * 
+ */
 public class GenBinaryDataFile {
-
+    /**
+     * number of records per block
+     */
     static final int RECS_PER_BLOCK = 512;
+    /**
+     * number of bytes per record
+     */
     static final int BYTES_PER_RECORD = Long.BYTES + Double.BYTES; // should be
                                                                    // 8 + 8
-
+    /**
+     * generates a random data file
+     * @param filename input file
+     * @param numBlocks number of blocks
+     * @throws IOException in case wrong input
+     */
     public static void generateRandom(String filename, int numBlocks)
         throws IOException {
+
         Random randGen = new Random();
         int numRecords = numBlocks * RECS_PER_BLOCK;
         DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(
