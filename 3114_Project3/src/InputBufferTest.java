@@ -23,7 +23,7 @@ public class InputBufferTest extends student.TestCase {
     
     public void testReadBlock1() throws IOException {
         inputBuffer2.readBlock();
-        // inputBuffer2.readBlock();
+        inputBuffer2.readBlock();
         
         
     }

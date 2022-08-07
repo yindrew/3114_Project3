@@ -28,7 +28,7 @@ public class Block {
     public String toString() {
         String sum = "";
         for(int x = 0; x < 512; x++) {
-            sum = sum + recordArr[x].toString() + " ";
+            sum = sum + recordArr[x].toString() + "\n";
             
         }
         return sum;

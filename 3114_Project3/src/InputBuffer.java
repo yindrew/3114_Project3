@@ -25,10 +25,12 @@ public class InputBuffer {
         ByteBuffer buffer = ByteBuffer.allocate(8192); 
         byte[] dataArray = buffer.array(); // buffer for 1 block
 
-
         while (inputStream.read(dataArray) != -1) { // reads from inputStream into data array.
            Block block = new Block(dataArray); // block takes a 8192 sized byte array and converts it into 512 records
            System.out.println(block.toString());
+           break;
+
+           
            
         }
         
