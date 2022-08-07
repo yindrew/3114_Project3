@@ -74,15 +74,6 @@ public class MinHeapTest extends student.TestCase {
     }
 
 
-    /**
-     * testing remove
-     */
-    public void testRemove() {
-        assertEquals(minHeap.remove(2).getKey(), (double)4, 0.00);
-        assertEquals(minHeap.remove(7).getKey(), (double)10, 0.00);
-
-    }
-
     
     
     

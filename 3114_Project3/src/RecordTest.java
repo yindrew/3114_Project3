@@ -1,4 +1,3 @@
-
 import java.nio.ByteBuffer;
 import student.TestCase;
 
@@ -12,7 +11,7 @@ public class RecordTest extends TestCase {
 
     private byte[] aBite;
     private byte[] bBite;
-
+    private Record record;
 
     /**
      * The setup for the tests
@@ -26,6 +25,7 @@ public class RecordTest extends TestCase {
         buffer.putLong(4);
         buffer.putDouble(8, 0.33);
         bBite = buffer.array();
+        record = new Record(5, Long.valueOf(3));
     }
 
 
@@ -37,7 +37,25 @@ public class RecordTest extends TestCase {
         assertEquals((double)1, rec.getKey(), 0.00);
         assertTrue(rec.toString().equals("1.0"));
     }
-    
+
+
+    /**
+     * Tests the getter methods
+     */
+    public void testGetter() {
+        assertEquals(record.getKey(), 5, 0.0);
+        assertTrue(record.getValue() == 3);
+    }
+
+
+    /**
+     * testing the toString method
+     */
+    public void testToString() {
+        assertEquals(record.toString(), "5");
+    }
+
+
     /**
      * Tests the first constructor
      */
@@ -47,7 +65,7 @@ public class RecordTest extends TestCase {
         assertEquals(aRec.compareTo(recToBeCompared), 0);
         Record bRec = new Record(bBite);
         assertEquals(aRec.compareTo(bRec), 1);
-        for (int a = 5; a > 0; a --) {
+        for (int a = 5; a > 0; a--) {
             System.out.print(a);
         }
     }

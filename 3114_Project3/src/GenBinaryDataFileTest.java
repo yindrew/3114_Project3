@@ -15,7 +15,7 @@ public class GenBinaryDataFileTest extends student.TestCase {
     }
     
     public void testGenerateSorted() throws IOException {
-        GenBinaryDataFile.generateSorted("sorted.bin", 2);
+        GenBinaryDataFile.generateSorted("sorted2Blocks.bin", 2);
     }
 
 }

@@ -10,13 +10,19 @@ public class Record implements Comparable<Record> {
 
     private double key;
     private Long value;
-    
-    
+
+    /**
+     * Constructor for the Record class
+     * 
+     * @param key
+     * @param value
+     */
     public Record(double key, Long value) {
         this.key = key;
         this.value = value;
-        
+
     }
+
 
     /**
      * The constructor for the Record class
@@ -30,15 +36,23 @@ public class Record implements Comparable<Record> {
         value = buff.getLong(0);
     }
 
-
+    /**
+     * getter method for the key
+     * @return the key
+     */
     public double getKey() {
         return key;
     }
 
+    /**
+     * getter method for the value
+     * @return the value 
+     */
     public Long getValue() {
         return value;
     }
-    
+
+
     /**
      * Compare Two Records based on their keys
      * 

@@ -7,8 +7,10 @@
  */
 class MinHeap {
     private Record[] heap;
-    private int maxSize = 4096;  // maximum 8 blocks
-    private int n;
+    private int maxSize = 4096; // maximum 8 blocks
+    private int n; // numbers of records in active heap
+    private Record lastRemoved = new Record(-Double.MAX_VALUE, Long.valueOf(0));
+    private int inactive = 0; // numbers of records in inactive heap
 
     /**
      * constructor
@@ -102,11 +104,35 @@ class MinHeap {
      * @param key
      *            value being inserted into the heap
      */
-    public void insert(Record key) {
+    public void insert(Record record) {
         assert n < maxSize : "Heap is full; cannot insert";
-        heap[n] = key;
-        n++;
-        siftUp(n - 1);
+        if (record.getKey() < lastRemoved.getKey()) { // put record into inactive
+            heap[4095 - inactive] = record;
+            inactive++;
+        }
+        else {
+            heap[n] = record;
+            n++;
+            siftUp(n - 1);
+        }
+
+    }
+
+
+    /**
+     * inserting multiple records
+     * 
+     * @param key
+     */
+    public void insert(Record[] records) {
+        for (int i = 0; i < records.length; i++) {
+            if (!isFull()) {
+                insert(records[i]);
+            }
+            else {
+                break;
+            }
+        }
     }
 
 
@@ -167,30 +193,31 @@ class MinHeap {
      * @return the min element from the heap
      */
     public Record removeMin() {
-        assert n > 0 : "Heap is empty; cannot remove";
+        if (n == 0 && inactive != 0) {
+
+            this.buildHeap();
+            // keep track of this spot right here. this is when each run ends
+            // and starts a new run
+            // fill the heap. then heapify. restart process.
+            inactive = 4095;
+            n = heap.length;
+        }
         n--;
         swap(0, n); // Swap maximum with last value
         siftDown(0); // Put new heap root val in correct place
+        lastRemoved = heap[n];
         return heap[n];
     }
 
 
     /**
-     * remove a element from the heap
+     * returns the last removed element
      * 
-     * @param pos
-     *            the position of the element getting removed
-     * @return the removed element
+     * @return last removed element
      */
-    public Record remove(int pos) {
-        assert (0 <= pos && pos < n) : "Invalid heap position";
-        n--;
-        swap(pos, n); // Swap with last value
-        update(pos); // Move other value to correct position
-        return heap[n];
+    public Record getLastRemoved() {
+        return lastRemoved;
     }
-
-
 
 
     /**
@@ -217,6 +244,16 @@ class MinHeap {
         Record temp = heap[pos1];
         heap[pos1] = heap[pos2];
         heap[pos2] = temp;
+    }
+
+
+    /**
+     * checking if the heap is full or not
+     * 
+     * @return whether or not the heap is full
+     */
+    public boolean isFull() {
+        return (n == maxSize);
     }
 
 
