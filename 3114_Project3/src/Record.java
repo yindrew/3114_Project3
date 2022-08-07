@@ -8,7 +8,15 @@ import java.nio.ByteBuffer;
  */
 public class Record implements Comparable<Record> {
 
-    private byte[] completeRecord;
+    private double key;
+    private Long value;
+    
+    
+    public Record(double key, Long value) {
+        this.key = key;
+        this.value = value;
+        
+    }
 
     /**
      * The constructor for the Record class
@@ -17,30 +25,20 @@ public class Record implements Comparable<Record> {
      *            The byte for this object
      */
     public Record(byte[] record) {
-        completeRecord = record;
+        ByteBuffer buff = ByteBuffer.wrap(record);
+        key = buff.getDouble(8);
+        value = buff.getLong(0);
     }
 
 
-    /**
-     * returns the complete record
-     * 
-     * @return complete record
-     */
-    public byte[] getCompleteRecord() {
-        return completeRecord;
-    }
-
-    /**
-     * Returns the object's key
-     * 
-     * @return the key
-     */
     public double getKey() {
-        ByteBuffer buff = ByteBuffer.wrap(completeRecord);
-        return buff.getDouble(8);
+        return key;
     }
 
-
+    public Long getValue() {
+        return value;
+    }
+    
     /**
      * Compare Two Records based on their keys
      * 
@@ -52,7 +50,7 @@ public class Record implements Comparable<Record> {
      */
     @Override
     public int compareTo(Record toBeCompared) {
-        return Double.compare(this.getKey(), toBeCompared.getKey());
+        return Double.compare(key, toBeCompared.getKey());
     }
 
 

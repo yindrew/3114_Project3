@@ -1,4 +1,5 @@
 import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class GenBinaryDataFile {
      */
     public static void generateRandom(String filename, int numBlocks)
         throws IOException {
-
+        
         Random randGen = new Random();
         int numRecords = numBlocks * RECS_PER_BLOCK;
         DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(
@@ -48,6 +49,27 @@ public class GenBinaryDataFile {
         dos.flush();
         dos.close();
     }
+    
+    public static void generateSorted(String filename, int numBlocks) throws IOException {
+        int numRecords = numBlocks * RECS_PER_BLOCK;
+        DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(
+            new FileOutputStream(filename)));
+        Random randGen = new Random();
+
+        for (int i = 0; i < numRecords; i++) {
+            long value = randGen.nextLong();
+            double key = (double) i;
+
+            dos.writeLong(value);
+            dos.writeDouble(key);   
+        }
+                
+        dos.flush();
+        dos.close();
+        
+        
+    }
+    
 
     // Want to read a file? Well look above and think about changing
     // 'Output' to 'Input'

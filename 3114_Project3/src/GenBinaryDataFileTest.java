@@ -6,9 +6,16 @@ import java.io.IOException;
  * @version 0.1
  */
 public class GenBinaryDataFileTest extends student.TestCase {
-    
+    /**
+     * testing generateRandom 
+     * @throws IOException in case no input/output file
+     */
     public void testGenerateRandom() throws IOException {
-        GenBinaryDataFile.generateRandom("names", 5);
+        GenBinaryDataFile.generateRandom("random.bin", 5);
+    }
+    
+    public void testGenerateSorted() throws IOException {
+        GenBinaryDataFile.generateSorted("sorted.bin", 2);
     }
 
 }

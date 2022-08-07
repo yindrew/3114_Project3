@@ -3,62 +3,106 @@
  * uses openDSA max heap and changed it to a min heap
  * 
  * @author yindrew
- *
+ * @version 0.1
  */
 class MinHeap {
-    private double[] heap; // Pointer to the heap array
-    private int maxSize = 4096; // 8 * 512. 8 blocks, each block has 512 records
-    private int n; // Number of things now in heap
+    private Record[] heap;
+    private int maxSize = 4096;  // maximum 8 blocks
+    private int n;
 
-    // Constructor supporting preloading of heap contents
-    public MinHeap(double[] h, int heapSize) {
+    /**
+     * constructor
+     * 
+     * @param h
+     *            array being input in
+     * @param heapSize
+     *            number of items in the array
+     */
+    public MinHeap(Record[] h, int heapSize) {
         heap = h;
         n = heapSize;
         buildHeap();
     }
 
+
     /**
      * gets the value at position index
-     * @param index the index of the heap
+     * 
+     * @param index
+     *            the index of the heap
      * @return the value of index in heap
      */
     public double getPosition(int index) {
-        return heap[index];
-        
+        return heap[index].getKey();
+
     }
 
-    // Return current size of the heap
+
+    /**
+     * gets the heap size
+     * 
+     * @return the heap size
+     */
     public int heapSize() {
         return n;
     }
 
 
-    // Return true if pos a leaf position, false otherwise
+    /**
+     * whether or not the position is a leaf
+     * 
+     * @param pos
+     *            position in heap
+     * @return whether or not the position is a leaf
+     */
     public boolean isLeaf(int pos) {
         return (n / 2 <= pos) && (pos < n);
     }
 
 
-    // Return position for left child of pos
+    /**
+     * gets left child of current node
+     * 
+     * @param pos
+     *            position of current node
+     * @return left child of current node
+     */
     public static int leftChild(int pos) {
         return 2 * pos + 1;
     }
 
 
-    // Return position for right child of pos
+    /**
+     * gets right child of current node
+     * 
+     * @param pos
+     *            position of current node
+     * @return right child of the current node
+     */
     public static int rightChild(int pos) {
         return 2 * pos + 2;
     }
 
 
-    // Return position for parent
+    /**
+     * get the parent of the current node
+     * 
+     * @param pos
+     *            position of current node
+     * @return the parent of the current node
+     */
     public static int parent(int pos) {
         return (pos - 1) / 2;
     }
 
 
-    // Insert val into heap
-    public void insert(double key) {
+    /**
+     * inserting a Record into the heap
+     * 
+     * @param key
+     *            value being inserted into the heap
+     */
+    public void insert(Record key) {
         assert n < maxSize : "Heap is full; cannot insert";
         heap[n] = key;
         n++;
@@ -66,7 +110,9 @@ class MinHeap {
     }
 
 
-    // Heapify contents of Heap
+    /**
+     * builds the heap from the input array
+     */
     private void buildHeap() {
         for (int i = parent(n - 1); i >= 0; i--) {
             siftDown(i);
@@ -74,7 +120,12 @@ class MinHeap {
     }
 
 
-    // Moves an element down to its correct place
+    /**
+     * sifts the position of each element down
+     * 
+     * @param pos
+     *            position of the node being sifted down
+     */
     private void siftDown(int pos) {
         assert (0 <= pos && pos < n) : "Invalid heap position";
         while (!isLeaf(pos)) {
@@ -91,7 +142,12 @@ class MinHeap {
     }
 
 
-    // Moves an element up to its correct place
+    /**
+     * sifts the position of a element up
+     * 
+     * @param pos
+     *            position of the node being sifted up
+     */
     private void siftUp(int pos) {
         assert (0 <= pos && pos < n) : "Invalid heap position";
         while (pos > 0) {
@@ -105,8 +161,12 @@ class MinHeap {
     }
 
 
-    // Remove and return maximum value
-    public double removeMin() {
+    /**
+     * remove the min element from the heap
+     * 
+     * @return the min element from the heap
+     */
+    public Record removeMin() {
         assert n > 0 : "Heap is empty; cannot remove";
         n--;
         swap(0, n); // Swap maximum with last value
@@ -115,8 +175,14 @@ class MinHeap {
     }
 
 
-    // Remove and return element at specified position
-    public double remove(int pos) {
+    /**
+     * remove a element from the heap
+     * 
+     * @param pos
+     *            the position of the element getting removed
+     * @return the removed element
+     */
+    public Record remove(int pos) {
         assert (0 <= pos && pos < n) : "Invalid heap position";
         n--;
         swap(pos, n); // Swap with last value
@@ -125,32 +191,46 @@ class MinHeap {
     }
 
 
-    // Modify the value at the given position
-    public void modify(int pos, double newVal) {
-        assert (0 <= pos && pos < n) : "Invalid heap position";
-        heap[pos] = newVal;
-        update(pos);
-    }
 
 
-    // The value at pos has been changed, restore the heap property
+    /**
+     * updating the heap
+     * 
+     * @param updating
+     *            the values around the value
+     */
     private void update(int pos) {
         siftUp(pos); // priority goes up
         siftDown(pos); // unimportant goes down
     }
 
 
-    // swaps the elements at two positions
+    /**
+     * swapping the values of 2 positions
+     * 
+     * @param pos1
+     *            position of first element
+     * @param pos2
+     *            position of second element
+     */
     private void swap(int pos1, int pos2) {
-        double temp = heap[pos1];
+        Record temp = heap[pos1];
         heap[pos1] = heap[pos2];
         heap[pos2] = temp;
     }
 
 
-    // does comparison used for checking heap validity
+    /**
+     * comparing if one element is less than the other
+     * 
+     * @param pos1
+     *            position of first element
+     * @param pos2
+     *            position of second element
+     * @return whether or not first element is smaller than second
+     */
     private boolean isLessThan(int pos1, int pos2) {
-        if (heap[pos1] < heap[pos2]) {
+        if (heap[pos1].getKey() < heap[pos2].getKey()) {
             return true;
         }
         else {
