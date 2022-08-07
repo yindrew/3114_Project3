@@ -22,6 +22,7 @@ public class outputBuffer {
     public outputBuffer(int recordNum) {
        records = new Record[recordNum];
        size = 0;
+       
        this.capacity = recordNum * 16;
     }
     
