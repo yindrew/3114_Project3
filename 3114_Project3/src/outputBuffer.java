@@ -19,10 +19,10 @@ public class outputBuffer {
      * constructor
      * @param recordNum
      */
-    public outputBuffer(int recordNum, int capacity) {
+    public outputBuffer(int recordNum) {
        records = new Record[recordNum];
        size = 0;
-       this.capacity = capacity;
+       this.capacity = recordNum * 16;
     }
     
     /**
