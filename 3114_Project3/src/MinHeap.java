@@ -12,6 +12,12 @@ class MinHeap {
     private Record lastRemoved = new Record(-Double.MAX_VALUE, Long.valueOf(0));
     private int inactive = 0; // numbers of records in inactive heap
 
+    
+    
+    public MinHeap() {
+        heap = new Record[4096];
+        n = 0;
+    }
     /**
      * constructor
      * 
@@ -117,23 +123,17 @@ class MinHeap {
         }
 
     }
-
-
+    
     /**
-     * inserting multiple records
-     * 
-     * @param key
+     * inserting multiple records into the heap
+     * @param records record array being inserted
      */
     public void insert(Record[] records) {
-        for (int i = 0; i < records.length; i++) {
-            if (!isFull()) {
-                insert(records[i]);
-            }
-            else {
-                break;
-            }
+        for(int x = 0; x < records.length; x++) {
+            insert(records[x]);
         }
     }
+
 
 
     /**
@@ -153,7 +153,7 @@ class MinHeap {
      *            position of the node being sifted down
      */
     private void siftDown(int pos) {
-        assert (0 <= pos && pos < n) : "Invalid heap position";
+        // assert (0 <= pos && pos < n) : "Invalid heap position";
         while (!isLeaf(pos)) {
             int child = leftChild(pos);
             if ((child + 1 < n) && isLessThan(child + 1, child)) {
@@ -167,6 +167,9 @@ class MinHeap {
         }
     }
 
+    public boolean isEmpty() {
+        return (n == 0);
+    }
 
     /**
      * sifts the position of a element up
@@ -193,7 +196,13 @@ class MinHeap {
      * @return the min element from the heap
      */
     public Record removeMin() {
-        if (n == 0 && inactive != 0) {
+        if(n == 1) {
+            n--;
+            lastRemoved = heap[n];
+            return heap[n];
+        }
+        
+        else if (n == 0 && inactive != 0) {
 
             this.buildHeap();
             // keep track of this spot right here. this is when each run ends
@@ -202,11 +211,16 @@ class MinHeap {
             inactive = 4095;
             n = heap.length;
         }
-        n--;
-        swap(0, n); // Swap maximum with last value
-        siftDown(0); // Put new heap root val in correct place
-        lastRemoved = heap[n];
-        return heap[n];
+        else {
+            n--;
+            swap(0, n); // Swap maximum with last value
+            siftDown(0); // Put new heap root val in correct place
+            lastRemoved = heap[n];
+            return heap[n];
+            
+        }
+        return null;
+
     }
 
 

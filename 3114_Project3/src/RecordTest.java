@@ -12,6 +12,7 @@ public class RecordTest extends TestCase {
     private byte[] aBite;
     private byte[] bBite;
     private Record record;
+    private Record record1;
 
     /**
      * The setup for the tests
@@ -26,6 +27,7 @@ public class RecordTest extends TestCase {
         buffer.putDouble(8, 0.33);
         bBite = buffer.array();
         record = new Record(5, Long.valueOf(3));
+        
     }
 
 

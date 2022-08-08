@@ -9,6 +9,8 @@ import java.util.Random;
 public class MinHeapTest extends student.TestCase {
     private MinHeap minHeap;
     private Record[] h;
+    private MinHeap minHeap1;
+    private MinHeap fullHeap;
 
     /**
      * setting up the tests
@@ -18,9 +20,14 @@ public class MinHeapTest extends student.TestCase {
         for (int x = 10; x > 0; x--) {
             h[10 - x] = new Record(x, Long.valueOf(0));
         }
+        
+        
 
         minHeap = new MinHeap(h, 10);
+        minHeap1 = new MinHeap();
+        minHeap1.insert(new Record(0, Long.valueOf(0)));
 
+        
     }
 
 
@@ -29,9 +36,22 @@ public class MinHeapTest extends student.TestCase {
      */
     public void testHeapSize() {
         assertEquals(minHeap.heapSize(), 10);
+        assertEquals(minHeap1.heapSize(), 1);
 
     }
 
+    /**
+     * testing isFull
+     */
+    public void testIsFull() {
+        Record[] fullRecord = new Record[4096];
+        for(int x = 0; x < 4096; x++) {
+            fullRecord[x] = new Record(x, Long.valueOf(0));
+        }
+        fullHeap = new MinHeap(fullRecord, 4096);
+        assertFalse(minHeap.isFull());
+        assertTrue(fullHeap.isFull());
+    }
 
     /**
      * testing isLeaf
@@ -72,6 +92,16 @@ public class MinHeapTest extends student.TestCase {
         assertEquals(minHeap.heapSize(), 9);
 
     }
+    
+    /**
+     * testing removeMin
+     */
+    public void testRemoveMin1() {
+        assertEquals(minHeap1.getPosition(0), 0, 0.0);
+        assertEquals(minHeap1.removeMin().getKey(), 0, 0.0);
+    }
+
+    
 
 
     
