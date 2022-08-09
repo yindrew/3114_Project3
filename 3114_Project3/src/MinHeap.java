@@ -11,7 +11,8 @@ class MinHeap {
     private int n; // numbers of records in active heap
     private Record lastRemoved = new Record(-Double.MAX_VALUE, Long.valueOf(0));
     private int inactive = 0; // numbers of records in inactive heap
-    private LinkedList<Double> runsInfo; // need to finish this
+    private LinkedList<Integer> runsInfo = new LinkedList<Integer>(); // need to finish this
+    private int recordsInRun = 0;
 
     
     
@@ -233,6 +234,7 @@ class MinHeap {
 
         if (n == 1) { // remove last element in heap
             n--;
+            recordsInRun++;
             lastRemoved = heap[n];
             return heap[n];
         }
@@ -242,6 +244,8 @@ class MinHeap {
             for (int x = 0; x < inactive; x++) {
                 heap[x] = heap[x + shift];
             }
+            runsInfo.add(recordsInRun);
+            recordsInRun = 0;
             n = inactive;
             inactive = 0;
             this.buildHeap();
@@ -253,6 +257,7 @@ class MinHeap {
         }
 
         else { // remove the min element in heap
+            recordsInRun++;
             n--;
             swap(0, n);
             siftDown(0);

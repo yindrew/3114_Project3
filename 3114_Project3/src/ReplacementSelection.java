@@ -1,11 +1,11 @@
 import java.io.IOException;
 
-public class replacementSelection {
+public class ReplacementSelection {
     private InputBuffer inputBuffer;
     private MinHeap minHeap = new MinHeap(4096);
-    private OutputBuffer outputBuffer = new OutputBuffer(512);
+    private OutputBuffer outputBuffer = new OutputBuffer();
 
-    public replacementSelection(String file) throws IOException {
+    public ReplacementSelection(String file) throws IOException {
         inputBuffer = new InputBuffer(file);
         while (!minHeap.isFull() && inputBuffer.getAvaliable() >= 16) { // maybe
                                                                         // shouldn't
@@ -30,10 +30,14 @@ public class replacementSelection {
             else if (!minHeap.isEmpty() && inputBuffer.getAvaliable() == 0) {
                 // store min in output
                 outputBuffer.addRecord(minHeap.removeMin()); 
+                System.out.print(outputBuffer.lastRecord());
+
             }
             
             else {
                 outputBuffer.addRecord(minHeap.removeMin()); 
+                System.out.print(outputBuffer.lastRecord());
+
             }
 
         }

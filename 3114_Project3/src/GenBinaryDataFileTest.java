@@ -12,7 +12,10 @@ public class GenBinaryDataFileTest extends student.TestCase {
      */
     public void testGenerateRandom() throws IOException {
         GenBinaryDataFile.generateRandom("random.bin", 5);
+        GenBinaryDataFile.generateRandom("random20.bin", 20);
+
     }
+    
     
     /**
      * testing generateSorted with 1 block
@@ -44,6 +47,8 @@ public class GenBinaryDataFileTest extends student.TestCase {
      */
     public void testGenerateReverseSorted2() throws IOException {
         GenBinaryDataFile.generateReverseSorted("reverseSorted2Block.bin", 2);
+        GenBinaryDataFile.generateReverseSorted("reverse20.bin", 20);
+
     }
 
 }

@@ -11,26 +11,35 @@ import java.nio.ByteBuffer;
 public class OutputBuffer {
 
     //field
-    private Record[] records;
-    private int size;
-    private int capacity;
+    private Record[] records = new Record[512];
+    private int size = 0;
+    private int capacity = 512;
+    private RandomAccessFile file;
     
     /**
      * constructor
      * @param recordNum
      */
-    public OutputBuffer(int recordNum) {
-       records = new Record[recordNum];
-       size = 0;
-       
-       this.capacity = recordNum * 16;
+    public OutputBuffer(RandomAccessFile file) {
+        this.file = file;
+        
+    }
+    
+    
+    public Record lastRecord() {
+        return records[size - 1];
     }
     
     /**
      * add record
      * @param record
+     * @throws IOException 
      */
-    public void addRecord(Record record) {
+    public void addRecord(Record record) throws IOException {
+        if(size == capacity) {
+            write();
+            size = 0;
+        }
         records[size] = record;
         size++;
     }
@@ -40,7 +49,7 @@ public class OutputBuffer {
      * @param file
      * @throws IOException
      */
-    public void write(RandomAccessFile file) throws IOException {
+    public void write() throws IOException {
         ByteBuffer output = ByteBuffer.allocate(capacity);
         for (int i = 0; i < size; i++) {
             ByteBuffer bb = ByteBuffer.allocate(16);
