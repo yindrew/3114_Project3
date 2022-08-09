@@ -23,9 +23,15 @@ public class OutputBuffer {
      * @param recordNum
      * @throws FileNotFoundException 
      */
+<<<<<<< HEAD
     public OutputBuffer(String fileName) throws FileNotFoundException {
         File runFile = new File(fileName);
         this.file = new RandomAccessFile(runFile, "rw");
+=======
+    public OutputBuffer(String fileName) {
+        this.file = file;
+        
+>>>>>>> 290a32b (output buffer)
     }
     
     
@@ -36,13 +42,15 @@ public class OutputBuffer {
     /**
      * add record
      * @param record
-     * @throws IOException 
      */
-    public void addRecord(Record record) throws IOException {
+    public void addRecord(Record record) {
         if(size == capacity) {
             
+<<<<<<< HEAD
             write();
             size = 0;
+=======
+>>>>>>> 290a32b (output buffer)
         }
         records[size] = record;
         size++;
