@@ -15,9 +15,9 @@ public class InputBufferTest extends student.TestCase {
      * setting up the tests
      */
     public void setUp() throws FileNotFoundException {
-        inputBuffer = new InputBuffer("src/sorted.bin", 1);
-        inputBuffer2 = new InputBuffer("src/sorted2Blocks.bin", 2);
-        inputBuffer3 = new InputBuffer("src/reverseSorted2Block.bin", 2);
+        inputBuffer = new InputBuffer("src/sorted.bin");
+        inputBuffer2 = new InputBuffer("src/sorted2Blocks.bin");
+        inputBuffer3 = new InputBuffer("src/reverseSorted2Block.bin");
 
 
 
@@ -41,8 +41,11 @@ public class InputBufferTest extends student.TestCase {
      */
     public void testReadBlock1() throws IOException {
         inputBuffer2.readBlock();
+        System.out.println(inputBuffer2.getAvaliable() + " bytes left");
         System.out.print(inputBuffer2.readBlock().toString());
         assertTrue(systemOut().getHistory().contains("798.0 799.0"));
+        assertTrue(systemOut().getHistory().contains("8192 bytes left"));
+
 
         System.out.println("---------------");
 

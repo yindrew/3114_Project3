@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
  * @author hadenlee
  * @version 08/07/2022
  */
-public class outputBuffer {
+public class OutputBuffer {
 
     //field
     private Record[] records;
@@ -19,7 +19,7 @@ public class outputBuffer {
      * constructor
      * @param recordNum
      */
-    public outputBuffer(int recordNum) {
+    public OutputBuffer(int recordNum) {
        records = new Record[recordNum];
        size = 0;
        

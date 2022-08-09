@@ -11,13 +11,21 @@ class MinHeap {
     private int n; // numbers of records in active heap
     private Record lastRemoved = new Record(-Double.MAX_VALUE, Long.valueOf(0));
     private int inactive = 0; // numbers of records in inactive heap
+    private LinkedList<Double> runsInfo; // need to finish this
 
     
     
-    public MinHeap() {
-        heap = new Record[4096];
+    /**
+     * empty constructor
+     */
+    public MinHeap(int maxSize) {
+        heap = new Record[maxSize];
+        this.maxSize = maxSize;
         n = 0;
+
     }
+
+
     /**
      * constructor
      * 
@@ -43,6 +51,16 @@ class MinHeap {
     public double getPosition(int index) {
         return heap[index].getKey();
 
+    }
+
+
+    /**
+     * gets the inactive size
+     * 
+     * @return the inactive size
+     */
+    public int inactiveSize() {
+        return inactive;
     }
 
 
@@ -105,6 +123,17 @@ class MinHeap {
 
 
     /**
+     * easy insert
+     * 
+     * @param key
+     *            value
+     */
+    public void insert(double key) {
+        insert(new Record(key, Long.valueOf(0)));
+    }
+
+
+    /**
      * inserting a Record into the heap
      * 
      * @param key
@@ -112,9 +141,10 @@ class MinHeap {
      */
     public void insert(Record record) {
         assert n < maxSize : "Heap is full; cannot insert";
-        if (record.getKey() < lastRemoved.getKey()) { // put record into inactive
-            heap[4095 - inactive] = record;
+        if (record.getKey() < lastRemoved.getKey()) { // put record into
+                                                      // inactive
             inactive++;
+            heap[maxSize - inactive] = record;
         }
         else {
             heap[n] = record;
@@ -123,17 +153,19 @@ class MinHeap {
         }
 
     }
-    
+
+
     /**
      * inserting multiple records into the heap
-     * @param records record array being inserted
+     * 
+     * @param records
+     *            record array being inserted
      */
     public void insert(Record[] records) {
-        for(int x = 0; x < records.length; x++) {
+        for (int x = 0; x < records.length; x++) {
             insert(records[x]);
         }
     }
-
 
 
     /**
@@ -167,9 +199,11 @@ class MinHeap {
         }
     }
 
+
     public boolean isEmpty() {
-        return (n == 0);
+        return (n == 0 && inactive == 0);
     }
+
 
     /**
      * sifts the position of a element up
@@ -196,30 +230,35 @@ class MinHeap {
      * @return the min element from the heap
      */
     public Record removeMin() {
-        if(n == 1) {
-            n--;
-            lastRemoved = heap[n];
-            return heap[n];
-        }
-        
-        else if (n == 0 && inactive != 0) {
 
-            this.buildHeap();
-            // keep track of this spot right here. this is when each run ends
-            // and starts a new run
-            // fill the heap. then heapify. restart process.
-            inactive = 4095;
-            n = heap.length;
-        }
-        else {
+        if (n == 1) { // remove last element in heap
             n--;
-            swap(0, n); // Swap maximum with last value
-            siftDown(0); // Put new heap root val in correct place
             lastRemoved = heap[n];
             return heap[n];
-            
         }
-        return null;
+
+        else if (n == 0 && inactive != 0) { // active heap empty
+            int shift = maxSize - inactive;
+            for (int x = 0; x < inactive; x++) {
+                heap[x] = heap[x + shift];
+            }
+            n = inactive;
+            inactive = 0;
+            this.buildHeap();
+            return removeMin();
+        }
+
+        else if (n == 0 && inactive == 0) { // active heap and inactive empty
+            return null;
+        }
+
+        else { // remove the min element in heap
+            n--;
+            swap(0, n);
+            siftDown(0);
+            lastRemoved = heap[n];
+            return heap[n];
+        }
 
     }
 
@@ -231,18 +270,6 @@ class MinHeap {
      */
     public Record getLastRemoved() {
         return lastRemoved;
-    }
-
-
-    /**
-     * updating the heap
-     * 
-     * @param updating
-     *            the values around the value
-     */
-    private void update(int pos) {
-        siftUp(pos); // priority goes up
-        siftDown(pos); // unimportant goes down
     }
 
 
@@ -268,6 +295,12 @@ class MinHeap {
      */
     public boolean isFull() {
         return (n == maxSize);
+    }
+
+
+    public int shiftLeft(int cur, int x) {
+        return cur - x;
+
     }
 
 

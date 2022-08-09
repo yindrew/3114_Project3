@@ -12,7 +12,6 @@ import java.nio.ByteBuffer;
 public class InputBuffer {
     private BufferedInputStream inputStream;
     private FileInputStream fileInputStream;
-    private int blocks;
 
     /**
      * constructor for the input buffer
@@ -20,11 +19,19 @@ public class InputBuffer {
      * @param numberOfBlocks number of blocks
      * @throws FileNotFoundException if we cant find the file
      */
-    public InputBuffer(String fileName, int numberOfBlocks) throws FileNotFoundException {
+    public InputBuffer(String fileName) throws FileNotFoundException {
         fileInputStream = new FileInputStream(new File(fileName));
         inputStream = new BufferedInputStream(fileInputStream); // read 8192 bytes from the file
-        blocks = numberOfBlocks;
 
+    }
+    
+    /**
+     * gets the remaining available number of bytes
+     * @return the remaining available number of bytes
+     * @throws IOException when input/output is wrong
+     */
+    public int getAvaliable() throws IOException {
+        return inputStream.available();
     }
     
     /**
@@ -45,6 +52,18 @@ public class InputBuffer {
         
     }
 
+    public Record readRecord() throws IOException {
+        
+        ByteBuffer buffer = ByteBuffer.allocate(16); 
+        byte[] dataArray = buffer.array(); // buffer for 1 record
+        Record record = null;
+        if (inputStream.read(dataArray) != -1) { // reads from inputStream into data array.
+           record = new Record(dataArray); // block takes a 16 sized byte array and converts it into 512 records
+           
+        }
+        return record;
+        
+    }
 }
 
 
