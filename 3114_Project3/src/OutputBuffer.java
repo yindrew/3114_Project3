@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -19,10 +21,11 @@ public class OutputBuffer {
     /**
      * constructor
      * @param recordNum
+     * @throws FileNotFoundException 
      */
-    public OutputBuffer(RandomAccessFile file) {
-        this.file = file;
-        
+    public OutputBuffer(String fileName) throws FileNotFoundException {
+        File runFile = new File(fileName);
+        this.file = new RandomAccessFile(runFile, "rw");
     }
     
     
@@ -37,6 +40,7 @@ public class OutputBuffer {
      */
     public void addRecord(Record record) throws IOException {
         if(size == capacity) {
+            
             write();
             size = 0;
         }
@@ -45,11 +49,19 @@ public class OutputBuffer {
     }
     
     /**
+     * 
+     * @throws IOException
+     */
+    public void closeFile() throws IOException {
+        this.file.close();
+    }
+    
+    /**
      * write to file
      * @param file
      * @throws IOException
      */
-    public void write() throws IOException {
+    private void write() throws IOException {
         ByteBuffer output = ByteBuffer.allocate(capacity);
         for (int i = 0; i < size; i++) {
             ByteBuffer bb = ByteBuffer.allocate(16);
@@ -59,7 +71,7 @@ public class OutputBuffer {
             output.put(record);
         }
         
-        file.write(output.array());     
+        this.file.write(output.array());     
     }
   
     
