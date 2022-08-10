@@ -2,7 +2,7 @@
  * Node class
  * 
  * @author yindrew
- * @version 0.1
+ * @version 2022.08.10
  * @param <T>
  *            type
  */

@@ -36,21 +36,26 @@ public class Record implements Comparable<Record> {
         value = buff.getLong(0);
     }
 
+
     /**
      * getter method for the key
+     * 
      * @return the key
      */
     public double getKey() {
         return key;
     }
-    
+
+
     public void printOut() {
-        System.out.println(toString() + " ");
+        System.out.print(toString() + " ");
     }
+
 
     /**
      * getter method for the value
-     * @return the value 
+     * 
+     * @return the value
      */
     public Long getValue() {
         return value;

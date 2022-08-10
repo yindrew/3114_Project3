@@ -2,7 +2,7 @@
  * testing node class
  * 
  * @author yindrew
- * @version 0.1
+ * @version 2022.08.10
  */
 public class NodeTest extends student.TestCase {
     private Node<Double> node;

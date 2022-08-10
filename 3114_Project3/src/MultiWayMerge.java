@@ -4,7 +4,7 @@ import java.io.RandomAccessFile;
  * MultiWayMerge
  * 
  * @author hadenlee
- * @version 08/08/2022
+ * @version 2022.08.10
  */
 public class MultiWayMerge {
     

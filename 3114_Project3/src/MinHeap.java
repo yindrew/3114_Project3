@@ -3,19 +3,17 @@
  * uses openDSA max heap and changed it to a min heap
  * 
  * @author yindrew
- * @version 0.1
+ * @version 2022.08.10
  */
 class MinHeap {
     private Record[] heap;
-    private int maxSize = 4096; // maximum 8 blocks
-    private int activeNum; // numbers of records in active heap
-    private int inactiveNum = 0; // numbers of records in inactive heap
+    private int maxSize = 4096;
+    private int activeNum;
+    private int inactiveNum = 0;
     private Record lastRemoved = new Record(-Double.MAX_VALUE, Long.valueOf(0));
     private LinkedList<Integer> runsInfo = new LinkedList<Integer>();
     private int recordsInRun = 0;
 
-    
-    
     /**
      * empty constructor
      */
@@ -142,10 +140,10 @@ class MinHeap {
      */
     public void insert(Record record) {
 
+        assert (activeNum
+            + inactiveNum) < maxSize : "Heap is full; cannot insert";
 
-        assert (activeNum + inactiveNum) < maxSize : "Heap is full; cannot insert";
-        
-        if (record.getKey() < lastRemoved.getKey()) { 
+        if (record.getKey() < lastRemoved.getKey()) {
             inactiveNum++;
             heap[maxSize - inactiveNum] = record;
         }
@@ -203,6 +201,11 @@ class MinHeap {
     }
 
 
+    /**
+     * checks if the heap is empty
+     * 
+     * @return whether or not the heap is empty
+     */
     public boolean isEmpty() {
         return (activeNum == 0 && inactiveNum == 0);
     }
@@ -225,22 +228,16 @@ class MinHeap {
             pos = parent; // keep sifting up
         }
     }
-    
 
 
-
-    
-    
-    
     /**
-     * remove the min element from the heap. 
+     * remove the min element from the heap.
      * precondition: 1. heap is full
      * 2. clean up
      * 
      * @return the min element from the heap
      */
-    public Record removeMin() { 
-        
+    public Record removeMin() {
 
         if (activeNum == 1) { // remove last element in heap
             activeNum--;
@@ -248,8 +245,8 @@ class MinHeap {
             lastRemoved = heap[activeNum];
             return heap[activeNum];
         }
-                                                    
-        else if (activeNum == 0 && inactiveNum != 0) { // active heap empty    
+
+        else if (activeNum == 0 && inactiveNum != 0) { // active heap empty
             int shift = maxSize - inactiveNum;
             for (int x = 0; x < inactiveNum; x++) {
                 heap[x] = heap[x + shift];
@@ -262,7 +259,8 @@ class MinHeap {
             return removeMin();
         }
 
-        else if (activeNum == 0 && inactiveNum == 0) { // active heap and inactive empty
+        else if (activeNum == 0 && inactiveNum == 0) { // active heap and
+                                                       // inactive empty
             return null;
         }
 
@@ -276,7 +274,6 @@ class MinHeap {
         }
 
     }
-    
 
 
     /**
@@ -311,12 +308,6 @@ class MinHeap {
      */
     public boolean isFull() {
         return ((activeNum + inactiveNum) == maxSize);
-    }
-
-
-    public int shiftLeft(int cur, int x) {
-        return cur - x;
-
     }
 
 
