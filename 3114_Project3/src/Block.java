@@ -4,9 +4,9 @@
  * @version 0.1
  */
 public class Block {
-    int n = 512; // curr size
-    int size = 8192; // maximum size
-    Record[] recordArr = new Record[512]; // one block
+    private int n = 512; // curr size
+    private int size = 8192; // maximum size
+    private Record[] recordArr = new Record[512]; // one block
 
     /**
      * constructor

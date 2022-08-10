@@ -30,14 +30,17 @@ public class ReplacementSelection {
             // if heap isn't full and there is no more to read, remove
             else if (!minHeap.isEmpty() && inputBuffer.getAvaliable() == 0) {
                 // store min in output
-                outputBuffer.addRecord(minHeap.removeMin()); 
-                System.out.print(outputBuffer.lastRecord());
+                //outputBuffer.addRecord(minHeap.removeMin()); 
+                //System.out.print(outputBuffer.lastRecord());
+                System.out.println(minHeap.removeMin());
 
             }
             
             else {
-                outputBuffer.addRecord(minHeap.removeMin()); 
-                System.out.print(outputBuffer.lastRecord());
+                //outputBuffer.addRecord(minHeap.removeMin()); 
+                //System.out.print(outputBuffer.lastRecord());
+                System.out.println(minHeap.removeMin());
+
 
             }
 
