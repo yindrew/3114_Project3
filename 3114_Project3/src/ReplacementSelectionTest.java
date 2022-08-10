@@ -10,9 +10,6 @@ public class ReplacementSelectionTest extends student.TestCase {
     }
     
     
-    public void testMinHeap() {
-        
-    }
     
     
     public void testGetRuns() throws IOException {

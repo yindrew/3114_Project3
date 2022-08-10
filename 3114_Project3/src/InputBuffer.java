@@ -76,29 +76,19 @@ public class InputBuffer {
     }
 
     public Record readRecord() throws IOException {
-//        if (index >= 8192) {
-//            inputStream.read(dataArray);
-//            index = 0;
-//            return readRecord();
-//        }
-//        else {
-//            byte[] sliced = slice(dataArray, index, index + 16);
-//            Record record = new Record(sliced);
-//            index += 16;
-//            //System.out.println("  dgghh   " + dataArray.length);
-//            return record;
-//        }
+        if (index >= 8192) {
+            inputStream.read(dataArray);
+            index = 0;
+            return readRecord();
+        }
+        else {
+            byte[] sliced = slice(dataArray, index, index + 16);
+            Record record = new Record(sliced);
+            index += 16;
+            return record;
+        }
         
-      ByteBuffer buffer = ByteBuffer.allocate(16); 
-      byte[] dataArray = buffer.array();
 
-
-      Record record = null;
-      if (inputStream.read(dataArray) != -1) { // reads from inputStream into data array.
-         record = new Record(dataArray); // block takes a 16 sized byte array and converts it into 512 records
-         
-      }
-      return record;
         
         
     }

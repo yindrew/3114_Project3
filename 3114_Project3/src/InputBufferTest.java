@@ -9,7 +9,7 @@ public class InputBufferTest extends student.TestCase {
     private InputBuffer inputBuffer;
     private InputBuffer inputBuffer2;
     private InputBuffer inputBuffer3;
-    
+    private InputBuffer inputBuffer4;
 
     
     /**
@@ -19,9 +19,21 @@ public class InputBufferTest extends student.TestCase {
         inputBuffer = new InputBuffer("src/sorted.bin");
         inputBuffer2 = new InputBuffer("src/sorted2Blocks.bin");
         inputBuffer3 = new InputBuffer("src/reverseSorted2Block.bin");
+        inputBuffer4 = new InputBuffer("src/reverseSorted2Block.bin");
 
 
 
+    }
+    
+    public void testReadRecord() throws IOException {
+        System.out.println( inputBuffer4.getAvaliable());
+        System.out.println( inputBuffer4.readRecord());
+        System.out.println( inputBuffer4.getAvaliable());
+        System.out.println( inputBuffer4.readRecord());
+        System.out.println( inputBuffer4.getAvaliable());
+
+        
+        System.out.println();
     }
     
     /**

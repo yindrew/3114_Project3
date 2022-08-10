@@ -36,6 +36,17 @@ public class ReplacementSelection {
             }
 
         }
+        
+        for(int x = 0; x < 1024; x++) {
+            if( minHeap.isFull() ) {
+                System.out.println(minHeap.removeMin());
+
+            }
+            else {
+                minHeap.insert(inputBuffer.readRecord());
+
+            }
+        }
 
         // finishing up the last bits - phase 3
         cleanUp();
