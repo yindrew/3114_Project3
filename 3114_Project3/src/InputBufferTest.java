@@ -6,9 +6,10 @@ import java.io.IOException;
  * @version 0.1
  */
 public class InputBufferTest extends student.TestCase {
-    InputBuffer inputBuffer;
-    InputBuffer inputBuffer2;
-    InputBuffer inputBuffer3;
+    private InputBuffer inputBuffer;
+    private InputBuffer inputBuffer2;
+    private InputBuffer inputBuffer3;
+    
 
     
     /**

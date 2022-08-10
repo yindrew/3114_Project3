@@ -8,10 +8,10 @@
 class MinHeap {
     private Record[] heap;
     private int maxSize = 4096; // maximum 8 blocks
-    private int n; // numbers of records in active heap
+    private int activeNum; // numbers of records in active heap
+    private int inactiveNum = 0; // numbers of records in inactive heap
     private Record lastRemoved = new Record(-Double.MAX_VALUE, Long.valueOf(0));
-    private int inactive = 0; // numbers of records in inactive heap
-    private LinkedList<Integer> runsInfo = new LinkedList<Integer>(); // need to finish this
+    private LinkedList<Integer> runsInfo = new LinkedList<Integer>();
     private int recordsInRun = 0;
 
     
@@ -22,7 +22,7 @@ class MinHeap {
     public MinHeap(int maxSize) {
         heap = new Record[maxSize];
         this.maxSize = maxSize;
-        n = 0;
+        activeNum = 0;
 
     }
 
@@ -37,7 +37,7 @@ class MinHeap {
      */
     public MinHeap(Record[] h, int heapSize) {
         heap = h;
-        n = heapSize;
+        activeNum = heapSize;
         buildHeap();
     }
 
@@ -61,7 +61,7 @@ class MinHeap {
      * @return the inactive size
      */
     public int inactiveSize() {
-        return inactive;
+        return inactiveNum;
     }
 
 
@@ -70,8 +70,8 @@ class MinHeap {
      * 
      * @return the heap size
      */
-    public int heapSize() {
-        return n;
+    public int activeSize() {
+        return activeNum;
     }
 
 
@@ -83,7 +83,7 @@ class MinHeap {
      * @return whether or not the position is a leaf
      */
     public boolean isLeaf(int pos) {
-        return (n / 2 <= pos) && (pos < n);
+        return (activeNum / 2 <= pos) && (pos < activeNum);
     }
 
 
@@ -141,16 +141,18 @@ class MinHeap {
      *            value being inserted into the heap
      */
     public void insert(Record record) {
-        assert n < maxSize : "Heap is full; cannot insert";
-        if (record.getKey() < lastRemoved.getKey()) { // put record into
-                                                      // inactive
-            inactive++;
-            heap[maxSize - inactive] = record;
+
+
+        assert (activeNum + inactiveNum) < maxSize : "Heap is full; cannot insert";
+        
+        if (record.getKey() < lastRemoved.getKey()) { 
+            inactiveNum++;
+            heap[maxSize - inactiveNum] = record;
         }
         else {
-            heap[n] = record;
-            n++;
-            siftUp(n - 1);
+            heap[activeNum] = record;
+            activeNum++;
+            siftUp(activeNum - 1);
         }
 
     }
@@ -173,7 +175,7 @@ class MinHeap {
      * builds the heap from the input array
      */
     private void buildHeap() {
-        for (int i = parent(n - 1); i >= 0; i--) {
+        for (int i = parent(activeNum - 1); i >= 0; i--) {
             siftDown(i);
         }
     }
@@ -189,7 +191,7 @@ class MinHeap {
         // assert (0 <= pos && pos < n) : "Invalid heap position";
         while (!isLeaf(pos)) {
             int child = leftChild(pos);
-            if ((child + 1 < n) && isLessThan(child + 1, child)) {
+            if ((child + 1 < activeNum) && isLessThan(child + 1, child)) {
                 child = child + 1; // we get the lesser of the 2 children
             }
             if (!isLessThan(child, pos)) {
@@ -202,7 +204,7 @@ class MinHeap {
 
 
     public boolean isEmpty() {
-        return (n == 0 && inactive == 0);
+        return (activeNum == 0 && inactiveNum == 0);
     }
 
 
@@ -213,7 +215,7 @@ class MinHeap {
      *            position of the node being sifted up
      */
     private void siftUp(int pos) {
-        assert (0 <= pos && pos < n) : "Invalid heap position";
+        assert (0 <= pos && pos < activeNum) : "Invalid heap position";
         while (pos > 0) {
             int parent = parent(pos);
             if (isLessThan(parent, pos)) {
@@ -223,49 +225,58 @@ class MinHeap {
             pos = parent; // keep sifting up
         }
     }
+    
 
 
+
+    
+    
+    
     /**
-     * remove the min element from the heap
+     * remove the min element from the heap. 
+     * precondition: 1. heap is full
+     * 2. clean up
      * 
      * @return the min element from the heap
      */
-    public Record removeMin() {
+    public Record removeMin() { 
+        
 
-        if (n == 1) { // remove last element in heap
-            n--;
+        if (activeNum == 1) { // remove last element in heap
+            activeNum--;
             recordsInRun++;
-            lastRemoved = heap[n];
-            return heap[n];
+            lastRemoved = heap[activeNum];
+            return heap[activeNum];
         }
-
-        else if (n == 0 && inactive != 0) { // active heap empty
-            int shift = maxSize - inactive;
-            for (int x = 0; x < inactive; x++) {
+                                                    
+        else if (activeNum == 0 && inactiveNum != 0) { // active heap empty    
+            int shift = maxSize - inactiveNum;
+            for (int x = 0; x < inactiveNum; x++) {
                 heap[x] = heap[x + shift];
             }
             runsInfo.add(recordsInRun);
             recordsInRun = 0;
-            n = inactive;
-            inactive = 0;
+            activeNum = inactiveNum;
+            inactiveNum = 0;
             this.buildHeap();
             return removeMin();
         }
 
-        else if (n == 0 && inactive == 0) { // active heap and inactive empty
+        else if (activeNum == 0 && inactiveNum == 0) { // active heap and inactive empty
             return null;
         }
 
         else { // remove the min element in heap
             recordsInRun++;
-            n--;
-            swap(0, n);
+            activeNum--;
+            swap(0, activeNum);
             siftDown(0);
-            lastRemoved = heap[n];
-            return heap[n];
+            lastRemoved = heap[activeNum];
+            return heap[activeNum];
         }
 
     }
+    
 
 
     /**
@@ -299,7 +310,7 @@ class MinHeap {
      * @return whether or not the heap is full
      */
     public boolean isFull() {
-        return (n == maxSize);
+        return ((activeNum + inactiveNum) == maxSize);
     }
 
 

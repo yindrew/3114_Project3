@@ -43,6 +43,10 @@ public class Record implements Comparable<Record> {
     public double getKey() {
         return key;
     }
+    
+    public void printOut() {
+        System.out.println(toString() + " ");
+    }
 
     /**
      * getter method for the value

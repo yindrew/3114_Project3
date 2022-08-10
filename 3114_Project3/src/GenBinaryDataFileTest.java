@@ -13,6 +13,9 @@ public class GenBinaryDataFileTest extends student.TestCase {
     public void testGenerateRandom() throws IOException {
         GenBinaryDataFile.generateRandom("random.bin", 5);
         GenBinaryDataFile.generateRandom("random20.bin", 20);
+        GenBinaryDataFile.generateRandom("random8.bin", 8);
+        GenBinaryDataFile.generateRandom("random9.bin", 9);
+
 
     }
     

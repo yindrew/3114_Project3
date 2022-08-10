@@ -4,8 +4,8 @@
  * @version 0.1
  */
 public class Block {
-    private int n = 512; // curr size
-    private int size = 8192; // maximum size
+    private int n = 0; // curr size
+    private int size = 512; // maximum size
     private Record[] recordArr = new Record[512]; // one block
 
     /**
@@ -13,7 +13,7 @@ public class Block {
      * @param arr the byte array we are converting
      */
     public Block(byte[] arr) {
-        for(int x = 0; x < 512; x ++) {
+        for(int x = 0; x < (arr.length / 16); x ++) {
             byte[] sliced = slice(arr, x*16, x*16 + 16);
             Record record = new Record(sliced);
             recordArr[x] = record;

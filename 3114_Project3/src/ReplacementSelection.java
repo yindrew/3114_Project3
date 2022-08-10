@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 public class ReplacementSelection {
     private InputBuffer inputBuffer;
@@ -7,46 +8,47 @@ public class ReplacementSelection {
 
     public ReplacementSelection(String file) throws IOException {
         inputBuffer = new InputBuffer(file);
-        outputBuffer = new  OutputBuffer(file);
-        while (!minHeap.isFull() && inputBuffer.getAvaliable() >= 16) { // maybe
-                                                                        // shouldn't
-                                                                        // be 16
+        outputBuffer = new OutputBuffer(file);
+        while (!minHeap.isFull() && inputBuffer.getAvaliable() >= 16) { 
             minHeap.insert(inputBuffer.readBlock().getRecords());
         }
+        //System.out.println(minHeap.isFull() + "  ");
         // filled heap - phase 1
 
+    }
+    
+    public MinHeap getMinHeap() {
+        return minHeap;
     }
 
 
     public void getRuns() throws IOException {
-        // while the heap isn't empty or there is more to read
-        while (!minHeap.isEmpty() || inputBuffer.getAvaliable() >= 16) {
-            
-            // if heap isn't full and there is more to read, add new record
-            if (!minHeap.isFull() && inputBuffer.getAvaliable() >= 16) {
-                minHeap.insert(inputBuffer.readRecord());
-            }
-            
-            // if heap isn't full and there is no more to read, remove
-            else if (!minHeap.isEmpty() && inputBuffer.getAvaliable() == 0) {
-                // store min in output
-                //outputBuffer.addRecord(minHeap.removeMin()); 
-                //System.out.print(outputBuffer.lastRecord());
+        // removeMin to output and add from input - phase 2
+        while (inputBuffer.getAvaliable() >= 16) {
+            if( minHeap.isFull() ) {
                 System.out.println(minHeap.removeMin());
 
+                
             }
-            
             else {
-                //outputBuffer.addRecord(minHeap.removeMin()); 
-                //System.out.print(outputBuffer.lastRecord());
-                System.out.println(minHeap.removeMin());
-
+                minHeap.insert(inputBuffer.readRecord());
 
             }
 
         }
+
+        // finishing up the last bits - phase 3
+        cleanUp();
+
         outputBuffer.closeFile();
 
+    }
+    
+    
+    private void cleanUp() {
+        while(!minHeap.isEmpty()) {
+            minHeap.removeMin().printOut();;
+        }
     }
 
 }
