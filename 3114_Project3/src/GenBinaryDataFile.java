@@ -10,7 +10,7 @@ import java.util.Random;
  * Each record is one long and one double.
  * 
  * @author given
- * @version 0.1
+ * @version 2022.08.10
  * 
  */
 public class GenBinaryDataFile {
@@ -23,15 +23,20 @@ public class GenBinaryDataFile {
      */
     static final int BYTES_PER_RECORD = Long.BYTES + Double.BYTES; // should be
                                                                    // 8 + 8
+
     /**
      * generates a random data file
-     * @param filename input file
-     * @param numBlocks number of blocks
-     * @throws IOException in case wrong input
+     * 
+     * @param filename
+     *            input file
+     * @param numBlocks
+     *            number of blocks
+     * @throws IOException
+     *             in case wrong input
      */
     public static void generateRandom(String filename, int numBlocks)
         throws IOException {
-        
+
         Random randGen = new Random();
         int numRecords = numBlocks * RECS_PER_BLOCK;
         DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(
@@ -49,8 +54,20 @@ public class GenBinaryDataFile {
         dos.flush();
         dos.close();
     }
-    
-    public static void generateSorted(String filename, int numBlocks) throws IOException {
+
+
+    /**
+     * generates a sorted data file
+     * 
+     * @param filename
+     *            input file
+     * @param numBlocks
+     *            number of blocks
+     * @throws IOException
+     *             in case wrong input
+     */
+    public static void generateSorted(String filename, int numBlocks)
+        throws IOException {
         int numRecords = numBlocks * RECS_PER_BLOCK;
         DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(
             new FileOutputStream(filename)));
@@ -58,40 +75,46 @@ public class GenBinaryDataFile {
 
         for (int i = 0; i < numRecords; i++) {
             long value = randGen.nextLong();
-            double key = (double) i;
+            double key = (double)i;
 
             dos.writeLong(value);
-            dos.writeDouble(key);   
+            dos.writeDouble(key);
         }
-                
+
         dos.flush();
         dos.close();
-        
-        
+
     }
-    
-        
-    public static void generateReverseSorted(String filename, int numBlocks) throws IOException {
+
+
+    /**
+     * generates a reverse sorted data file
+     * 
+     * @param filename
+     *            input file
+     * @param numBlocks
+     *            number of blocks
+     * @throws IOException
+     *             in case wrong input
+     */
+    public static void generateReverseSorted(String filename, int numBlocks)
+        throws IOException {
         int numRecords = numBlocks * RECS_PER_BLOCK;
-        
+
         DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(
             new FileOutputStream(filename)));
         Random randGen = new Random();
 
-        for (int i = numRecords; i > 0 ; i--) {
+        for (int i = numRecords; i > 0; i--) {
             long value = randGen.nextLong();
-            double key = (double) i;
+            double key = (double)i;
 
             dos.writeLong(value);
-            dos.writeDouble(key);   
+            dos.writeDouble(key);
         }
-                
+
         dos.flush();
         dos.close();
     }
-    
-
-    // Want to read a file? Well look above and think about changing
-    // 'Output' to 'Input'
 
 }
