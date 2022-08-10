@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 
 /**
@@ -8,18 +10,32 @@ import java.io.RandomAccessFile;
  */
 public class MultiWayMerge {
     
-    //field
+    
 
+    //field
+    private LinkedList<Integer> runInfo;
+    private RandomAccessFile file;
+    private MinHeap heap;
+    
     /**
      * 
      * @param runInfo
      * @param runFile
+     * @throws FileNotFoundException 
      */
-    public MultiWayMerge(LinkedList runInfo, RandomAccessFile runFile) {
+    public MultiWayMerge(LinkedList<Integer> info, String fileName) throws FileNotFoundException {
+        //use runsInfo to create heap
+        this.runInfo = info;
+        heap = new MinHeap(runInfo.size());
         
+        //get the runFile
+        File runFile = new File(fileName);
+        this.file = new RandomAccessFile(runFile, "rw");
     }
     
     public void merge() {
+        
+
         
     }
 
