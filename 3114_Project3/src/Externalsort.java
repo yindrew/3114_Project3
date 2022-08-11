@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 // On my honor:
 // - I have not used source code obtained from another student,
 // or any other unauthorized source, either modified or
@@ -19,13 +21,17 @@
 
 /**
  * @version 2022.08.10
- * @author yindrew
+ * @author yindrew hadenlee
  *
  */
 public class Externalsort {
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
 
-        System.out.print("Hello world");
+        if (args.length == 1) {
+
+            new Processor(args[0]);
+
+        }
 
     }
 }

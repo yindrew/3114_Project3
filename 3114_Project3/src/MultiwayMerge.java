@@ -2,7 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-public class newMultiwayMerge {
+public class MultiwayMerge {
     private int[] runInfo; 
     private MinHeap heap;
     private InputBuffer IB1;
@@ -16,9 +16,9 @@ public class newMultiwayMerge {
     private OutputBuffer output;
     private InputBuffer[] IB;
 
-    public newMultiwayMerge(String in, String out, LinkedList<Integer> runInfo)
+    public MultiwayMerge(String in, String out, LinkedList<Integer> runInfo, int bufferNum)
         throws FileNotFoundException {
-        IB = new InputBuffer[8];
+        IB = new InputBuffer[bufferNum];
         this.runInfo = runInfo.toArray();
         
         IB1 = new InputBuffer(in);
@@ -51,24 +51,6 @@ public class newMultiwayMerge {
      */
     public OutputBuffer getOutput() {
         return output;
-    }
-    
-    /**
-     * processes runInfo
-     * 
-     * @param runsInfo
-     *            array that shows the different runs
-     */
-    public void processor(int[] runsInfo) {
-        int numRuns = runsInfo.length;
-
-        int eightWay = numRuns / 8;
-        int remainder = numRuns % 8;
-
-        for (int i = 0; i < eightWay; i++) {
-
-        }
-
     }
     
     /**
