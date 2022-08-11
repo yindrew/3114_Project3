@@ -46,23 +46,13 @@ public class ReplacementSelection {
      *             when there is a error with input file
      */
     public void getRuns() throws IOException {
-        // removeMin to output and add from input - phase 2
-        while (inputBuffer.getAvaliable() >= 16) {
+        // read from input buffer - fix this part
+        while (inputBuffer.getAvaliable() >= 16 || inputBuffer.moreToRead()) {
             if (minHeap.isFull()) {
                 Record record = minHeap.removeMin();
                 outputBuffer.addRecord(record);
+                record.printOut();
             }
-            else {
-                minHeap.insert(inputBuffer.readRecord());
-            }
-        }
-
-        for (int x = 0; x < 1024; x++) { // reads last block in
-            if (minHeap.isFull()) {
-                Record record = minHeap.removeMin();
-                outputBuffer.addRecord(record);    
-
-                }
             else {
                 minHeap.insert(inputBuffer.readRecord());
             }
@@ -84,6 +74,8 @@ public class ReplacementSelection {
         while (!minHeap.isEmpty()) {
             Record record = minHeap.removeMin();
             outputBuffer.addRecord(record);    
+            record.printOut();
+
 
         }
     }

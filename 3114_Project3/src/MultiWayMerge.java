@@ -6,21 +6,50 @@ import java.io.RandomAccessFile;
  * @author yindrew
  * @version 2022.08.11
  */
-public class MultiwayMerge {
+public class MultiWayMerge {
     private int[] runInfo; 
     private MinHeap heap;
     private OutputBuffer output;
     private InputBuffer[] IB;
 
-    public MultiwayMerge(String in, String out, LinkedList<Integer> runInfo)
+    public MultiWayMerge(String in, String out, LinkedList<Integer> runInfo)
         throws FileNotFoundException {
+<<<<<<< HEAD
         IB = new InputBuffer[8];
         this.runInfo = runInfo.toArray();
+=======
+        
+        this.runInfo = runInfo.toArray();
+        IB = new InputBuffer[8];
+>>>>>>> abff981 (working multiway merge)
         for (int x = 0; x < IB.length; x++) {
             IB[x] = new InputBuffer(in);
         }
         output = new OutputBuffer(out);
 
+    }
+    
+
+    /**
+     * merge a certain number of runs
+     * @param runs number of runs to be merged
+     * @param index starting position of the merged runs - first 8, next 8, last 8
+     * @throws IOException 
+     */
+    public void merge(int runs, int index) throws IOException {
+        fillHeap(runs, index); // start filling the heap from starting index
+        
+        
+        int numIncrements = 0;
+        for(int x = index; x < index + runs; x++) {
+            numIncrements += runInfo[x];
+        }
+        
+        for(int i = 0; i < numIncrements; i++) {
+            increment();
+        }
+        
+        
     }
     
     /**
@@ -42,13 +71,15 @@ public class MultiwayMerge {
     /**
      * fills a heap of length x. initial run.
      * @param length number of runs
+     * @param offset how far into the file are you. first 8 run/ next 8 run
      * @throws IOException if file doesn't exist
      */
-    public void fillHeap(int length) throws IOException {
+    public void fillHeap(int length, int offset) throws IOException {
         heap = new MinHeap(length);
         for(int i = 0; i < length; i++) {
-            IB[i].setBufferInfo(i, runInfo);
+            IB[i].setBufferInfo(i+offset, runInfo);
             update(IB[i].getBufferInfo(), IB[i]);
+            
         }
     }
     
@@ -73,6 +104,7 @@ public class MultiwayMerge {
                 break;
             }
         }
+        System.out.print(record.getKey() + " ");
         output.addRecord(record);
     }
     
@@ -88,23 +120,6 @@ public class MultiwayMerge {
     
     
     
-    
-    /**
-     * fill the empty heap when more than or equal to 8 run
-     * @throws IOException when file has error
-     */
-    public void fillHeapMax() throws IOException {
-        // instantiate the heap
-        heap = new MinHeap(8);
-        
-        // get helper values for the buffers
-
-        
-        // adds a record into heap, increments helper values
-        // helper values - numbers of records read, last read key value
-
-        
-    }
 
     
 
@@ -116,12 +131,13 @@ public class MultiwayMerge {
      */
     public void update(double[] bufferInfo, InputBuffer buffer) throws IOException {
         // reads the next record and inserts it
-        Record record1 = buffer.readRecord();
-        heap.insert(record1);
+        Record record = buffer.readRecord();
+        heap.insert(record);
         // adds one to the numbers of records added
         bufferInfo[0]++;
         // updates the last removed value
-        bufferInfo[2] = record1.getKey();
+        bufferInfo[2] = record.getKey();
+
     }
     
 

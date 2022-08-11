@@ -57,6 +57,7 @@ public class Record implements Comparable<Record> {
 
     public void printOut() {
         System.out.print(toString() + " ");
+
     }
 
 

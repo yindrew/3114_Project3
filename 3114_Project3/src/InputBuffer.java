@@ -16,16 +16,25 @@ public class InputBuffer {
     private FileInputStream fileInputStream;
     private ByteBuffer buffer = ByteBuffer.allocate(8192);
     private byte[] dataArray = buffer.array();
-    private int index = 8192;
     private double[] bufferInfo;
-    
-    
-    
+    private int index = 8192;
+
     /**
-     * sets the buffers position 
-     * @param offset where the buffer position should be
-     * @param runInfo all the records before it 
-     * @throws IOException error
+     * check if theres more to read
+     * @return true or false if index is less than 8192
+     */
+    public boolean moreToRead() {
+        return (index < 8192);
+    }
+    /**
+     * sets the buffers position
+     * 
+     * @param offset
+     *            where the buffer position should be
+     * @param runInfo
+     *            all the records before it
+     * @throws IOException
+     *             error
      */
     public void setBufferInfo(int offset, int[] runInfo) throws IOException {
         // sum is the total number of records that exist before the offset
@@ -34,23 +43,26 @@ public class InputBuffer {
             sum += runInfo[x];
         }
         // we read until we hit the desired point
-        for(int i = 0; i < sum; i++) {
+        for (int i = 0; i < sum; i++) {
             readRecord();
         }
         // we set bufferInfo to hold 3 values
         // the number of values read, the total number of records in the run
         // and the last record we outputted
-        bufferInfo = new double[] {0, runInfo[offset], 0};        
-        
+        bufferInfo = new double[] { 0, runInfo[offset], 0 };
+
     }
-    
+
+
     /**
      * gets bufferInfo
+     * 
      * @return bufferInfo
      */
     public double[] getBufferInfo() {
         return bufferInfo;
     }
+
 
     /**
      * constructor for the input buffer
@@ -133,6 +145,7 @@ public class InputBuffer {
      *             if we there isn't input
      */
     public Record readRecord() throws IOException {
+        // if finish parsing current block of data, read new block in
         if (index >= 8192) {
             inputStream.read(dataArray);
             index = 0;

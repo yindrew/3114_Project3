@@ -18,7 +18,14 @@ public class ReplacementSelectionTest extends student.TestCase {
     }
     
     
-    
+//    20 blocks = 20 * 512 records = 10240 records
+//
+//        Heap = 8 blocks = 8 * 512 records = 4096 records
+//
+//        First numbers in reversed are gonna be from 6145 to 10240
+//        Next batch of numbers will be from 2049 to 6144 
+//        Next batch will be finishing up rom 1 to 2048
+        
     /**
      * testing getRuns
      * @throws IOException when files don't work
@@ -42,7 +49,7 @@ public class ReplacementSelectionTest extends student.TestCase {
             System.out.print(node.getElement() + " ");
             node = node.getNext();
         }
-        assertTrue(systemOut().getHistory().contains("4096 4096 2049"));
+        assertTrue(systemOut().getHistory().contains("4096 4096 2048"));
 
 
 

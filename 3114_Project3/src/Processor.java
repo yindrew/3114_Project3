@@ -65,12 +65,12 @@ public class Processor {
         int remainder = runsNum % 8;
         
         
-        MultiwayMerge merge = new MultiwayMerge(tempFileName, "src/" + tempName +".bin", runsInfo);
+        MultiWayMerge merge = new MultiWayMerge(tempFileName, "src/" + tempName +".bin", runsInfo);
         for (int i = 0; i < eightWay; i++) {
-            merge.fillHeapMax(); 
+            merge.fillHeap(8, i*8); // fix
         }
         
-        merge.fillHeap(remainder);
+        merge.fillHeap(remainder, runsNum - remainder); //fix
         
         // MultiwayMerge("src/runFile.bin", TODO, runsInfo, remainder);
         
