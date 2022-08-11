@@ -16,12 +16,6 @@ public class MultiwayMerge {
         throws FileNotFoundException {
         IB = new InputBuffer[8];
         this.runInfo = runInfo.toArray();
-<<<<<<< HEAD
-
-=======
-        
-        
->>>>>>> ece1500 (fixing multiway merge)
         for (int x = 0; x < IB.length; x++) {
             IB[x] = new InputBuffer(in);
         }
