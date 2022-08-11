@@ -31,6 +31,13 @@ public class RecordTest extends TestCase {
 
     }
 
+    public void testToBinary() {
+        Record rec = new Record(aBite);
+        byte[] recBinary = rec.toBinary();
+        for(int x = 0; x < recBinary.length; x++) {
+            assertEquals(recBinary[x], aBite[x]);
+        }
+    }
 
     /**
      * Tests the first constructor
