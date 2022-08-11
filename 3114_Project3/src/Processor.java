@@ -1,14 +1,18 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Processor {
 
     //field
-    ReplacementSelection RS;
-    String sortedFileName;
+    private ReplacementSelection RS;
+    private String sortedFileName;
+    private String tempFileName = "src/runFile.bin";
+    private int tempName = 0;
     
     public Processor(String fileName) throws IOException {
         
+        this.sortedFileName = fileName;
         RS = new ReplacementSelection(fileName);
         RS.getRuns();
 
@@ -16,15 +20,31 @@ public class Processor {
         
         boolean flag = true;
         while (flag) {
-            temp = mergeProcessor(temp);
+            temp = mergeProcessor(temp, this.tempFileName);
             
             if (temp.toArray().length == 1) {
                 flag = false;
             }
         }
-
-        print(fileName);
         
+        delRename();
+
+        print(this.sortedFileName);
+        
+    }
+    
+    public void delRename() {
+        File file = new File(this.sortedFileName);
+        
+        //delete original file
+        file.delete();
+        
+        File oldName = new File(tempFileName);
+        File newName = new File(sortedFileName);
+
+        //rename one run sorted file
+        oldName.renameTo(newName);
+   
     }
     
     /**
@@ -32,20 +52,28 @@ public class Processor {
      * 
      * @param runsInfo2
      *            array that shows the different runs
-     * @throws FileNotFoundException 
+     * @throws IOException 
      */
-    public LinkedList<Integer> mergeProcessor(LinkedList<Integer> runsInfo) throws FileNotFoundException {
+    public LinkedList<Integer> mergeProcessor(LinkedList<Integer> runsInfo, String tempFileName) throws IOException {
 
         int runsNum = runsInfo.toArray().length;
         
         int eightWay = runsNum / 8;
         int remainder = runsNum % 8;
-
+        
+        
+        MultiwayMerge merge = new MultiwayMerge(tempFileName, "src/" + tempName +".bin", runsInfo);
         for (int i = 0; i < eightWay; i++) {
-            new MultiwayMerge("src/runFile.bin", "src/temp1.dat", runsInfo, 8);
+            merge.fillHeapMax(); 
         }
         
-        new MultiwayMerge("src/runFile.bin", "src/temp1.dat", runsInfo, remainder);
+        merge.fillHeap(remainder);
+        
+        // MultiwayMerge("src/runFile.bin", TODO, runsInfo, remainder);
+        
+        this.tempFileName = "src/" + tempName +".bin";
+
+        tempName++;
         
         //TODO get correct new runs INFO
         return runsInfo;

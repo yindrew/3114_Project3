@@ -5,31 +5,14 @@ import java.io.RandomAccessFile;
 public class MultiwayMerge {
     private int[] runInfo; 
     private MinHeap heap;
-    private InputBuffer IB1;
-    private InputBuffer IB2;
-    private InputBuffer IB3;
-    private InputBuffer IB4;
-    private InputBuffer IB5;
-    private InputBuffer IB6;
-    private InputBuffer IB7;
-    private InputBuffer IB8;
     private OutputBuffer output;
     private InputBuffer[] IB;
 
-    public MultiwayMerge(String in, String out, LinkedList<Integer> runInfo, int bufferNum)
+    public MultiwayMerge(String in, String out, LinkedList<Integer> runInfo)
         throws FileNotFoundException {
-        IB = new InputBuffer[bufferNum];
+        IB = new InputBuffer[8];
         this.runInfo = runInfo.toArray();
-        
-        IB1 = new InputBuffer(in);
-        IB2 = new InputBuffer(in);
-        IB3 = new InputBuffer(in);
-        IB4 = new InputBuffer(in);
-        IB5 = new InputBuffer(in);
-        IB6 = new InputBuffer(in);
-        IB7 = new InputBuffer(in);
-        IB8 = new InputBuffer(in);
-        
+
         for (int x = 0; x < IB.length; x++) {
             IB[x] = new InputBuffer(in);
         }
