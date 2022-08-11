@@ -12,6 +12,8 @@ public class InputBufferTest extends student.TestCase {
     private InputBuffer inputBuffer2;
     private InputBuffer inputBuffer3;
     private InputBuffer inputBuffer4;
+    private InputBuffer iB5;
+    private InputBuffer iB6;
 
     /**
      * setting up the tests
@@ -21,7 +23,19 @@ public class InputBufferTest extends student.TestCase {
         inputBuffer2 = new InputBuffer("src/sorted2Blocks.bin");
         inputBuffer3 = new InputBuffer("src/reverseSorted2Block.bin");
         inputBuffer4 = new InputBuffer("src/reverseSorted2Block.bin");
+        
+        iB5 = new InputBuffer("src/random.bin");
+        iB6 = new InputBuffer("src/random.bin");
 
+    }
+    
+    
+    /**
+     * testing reading 
+     * @throws IOException when file doesn't exist
+     */
+    public void testReading() {
+        
     }
 
 
