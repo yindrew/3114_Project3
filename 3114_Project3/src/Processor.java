@@ -5,16 +5,25 @@ public class Processor {
 
     //field
     ReplacementSelection RS;
-    LinkedList<Integer> runsInfo;
     String sortedFileName;
     
     public Processor(String fileName) throws IOException {
         
         RS = new ReplacementSelection(fileName);
         RS.getRuns();
-        runsInfo = RS.runsInfo();
-        mergeProcessor(runsInfo);
-        print(sortedFileName);
+
+        LinkedList<Integer> temp = RS.runsInfo();
+        
+        boolean flag = true;
+        while (flag) {
+            temp = mergeProcessor(temp);
+            
+            if (temp.toArray().length == 1) {
+                flag = false;
+            }
+        }
+
+        print(fileName);
         
     }
     
@@ -23,15 +32,23 @@ public class Processor {
      * 
      * @param runsInfo2
      *            array that shows the different runs
+     * @throws FileNotFoundException 
      */
-    public void mergeProcessor(LinkedList<Integer> runsInfo) {
+    public LinkedList<Integer> mergeProcessor(LinkedList<Integer> runsInfo) throws FileNotFoundException {
 
-        int eightWay = numRuns / 8;
-        int remainder = numRuns % 8;
+        int runsNum = runsInfo.toArray().length;
+        
+        int eightWay = runsNum / 8;
+        int remainder = runsNum % 8;
 
         for (int i = 0; i < eightWay; i++) {
-
+            new MultiwayMerge("src/runFile.bin", "src/temp1.dat", runsInfo, 8);
         }
+        
+        new MultiwayMerge("src/runFile.bin", "src/temp1.dat", runsInfo, remainder);
+        
+        //TODO get correct new runs INFO
+        return runsInfo;
 
     }
     
