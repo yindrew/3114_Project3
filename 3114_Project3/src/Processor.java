@@ -63,23 +63,27 @@ public class Processor {
         
         int eightWay = runsNum / 8;
         int remainder = runsNum % 8;
+        LinkedList<Integer> ret;
         
+        int[] recordsInfo = runsInfo.toArray();
+        int runsInfo1 = 0;
         
         MultiWayMerge merge = new MultiWayMerge(tempFileName, "src/" + tempName +".bin", runsInfo);
         for (int i = 0; i < eightWay; i++) {
-            merge.fillHeap(8, i*8); // fix
+            merge.merge(8, i * 8); 
+            runsInfo1 += recordsInfo[i];
         }
+
+        ret.add(runsInfo1);
         
-        merge.fillHeap(remainder, runsNum - remainder); //fix
+        merge.merge(remainder, runsNum - remainder);
         
-        // MultiwayMerge("src/runFile.bin", TODO, runsInfo, remainder);
         
         this.tempFileName = "src/" + tempName +".bin";
 
         tempName++;
         
-        //TODO get correct new runs INFO
-        return runsInfo;
+        return ;
 
     }
     
