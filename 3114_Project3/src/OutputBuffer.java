@@ -25,7 +25,7 @@ public class OutputBuffer {
      */
     public OutputBuffer(String fileName) throws FileNotFoundException {
         File runFile = new File(fileName);
-        this.file = new RandomAccessFile(runFile, "r");
+        this.file = new RandomAccessFile(runFile, "rw");
     }
 
     
