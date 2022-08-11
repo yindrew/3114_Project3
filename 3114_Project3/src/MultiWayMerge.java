@@ -157,6 +157,10 @@ public class MultiWayMerge {
         return new double[] {0, runInfo[offset], 0};
     }
 
+    /**
+     * gets the heap
+     * @return the heap
+     */
     public MinHeap getHeap() {
         return heap;
     }
