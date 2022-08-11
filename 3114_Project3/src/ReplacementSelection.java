@@ -51,7 +51,6 @@ public class ReplacementSelection {
             if (minHeap.isFull()) {
                 Record record = minHeap.removeMin();
                 outputBuffer.addRecord(record);
-                record.printOut();
             }
             else {
                 minHeap.insert(inputBuffer.readRecord());
@@ -62,7 +61,6 @@ public class ReplacementSelection {
             if (minHeap.isFull()) {
                 Record record = minHeap.removeMin();
                 outputBuffer.addRecord(record);    
-                record.printOut();
 
                 }
             else {
@@ -86,7 +84,6 @@ public class ReplacementSelection {
         while (!minHeap.isEmpty()) {
             Record record = minHeap.removeMin();
             outputBuffer.addRecord(record);    
-            record.printOut();
 
         }
     }

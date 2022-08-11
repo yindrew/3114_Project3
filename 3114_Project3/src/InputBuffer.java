@@ -17,6 +17,40 @@ public class InputBuffer {
     private ByteBuffer buffer = ByteBuffer.allocate(8192);
     private byte[] dataArray = buffer.array();
     private int index = 8192;
+    private double[] bufferInfo;
+    
+    
+    
+    /**
+     * sets the buffers position 
+     * @param offset where the buffer position should be
+     * @param runInfo all the records before it 
+     * @throws IOException error
+     */
+    public void setBufferInfo(int offset, int[] runInfo) throws IOException {
+        // sum is the total number of records that exist before the offset
+        int sum = 0;
+        for (int x = 0; x < offset; x++) {
+            sum += runInfo[x];
+        }
+        // we read until we hit the desired point
+        for(int i = 0; i < sum; i++) {
+            readRecord();
+        }
+        // we set bufferInfo to hold 3 values
+        // the number of values read, the total number of records in the run
+        // and the last record we outputted
+        bufferInfo = new double[] {0, runInfo[offset], 0};        
+        
+    }
+    
+    /**
+     * gets bufferInfo
+     * @return bufferInfo
+     */
+    public double[] getBufferInfo() {
+        return bufferInfo;
+    }
 
     /**
      * constructor for the input buffer

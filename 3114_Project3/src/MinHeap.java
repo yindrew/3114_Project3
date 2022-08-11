@@ -266,8 +266,6 @@ class MinHeap {
             inactiveNum = 0;
             lastRemoved = new Record(-Double.MAX_VALUE, Long.valueOf(0));
             this.buildHeap();
-            System.out.println();
-
             return removeMin();
         }
 

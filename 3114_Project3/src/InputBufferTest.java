@@ -39,6 +39,11 @@ public class InputBufferTest extends student.TestCase {
         Record record1 = iB6.readRecord();
         
         assertEquals(record.getKey(), record1.getKey(), 0.0);
+        
+        iB5.setBufferInfo(0, new int[] {2, 3});
+        iB5.getBufferInfo()[0]++;
+        iB5.getBufferInfo()[0]++;
+        assertEquals(iB5.getBufferInfo()[0], 2.0, 0.0);
 
     }
 

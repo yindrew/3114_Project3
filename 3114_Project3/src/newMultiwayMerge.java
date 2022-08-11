@@ -37,8 +37,22 @@ public class newMultiwayMerge {
 
     }
     
-
-
+    /**
+     * array of all the input buffers
+     * @return
+     */
+    public InputBuffer[] getIB(){
+        return IB;
+    }
+    
+    /**
+     * gets the output buffer
+     * @return output buffer
+     */
+    public OutputBuffer getOutput() {
+        return output;
+    }
+    
     /**
      * processes runInfo
      * 
@@ -56,11 +70,62 @@ public class newMultiwayMerge {
         }
 
     }
+    
     /**
-     * fill the empty heap
+     * fills a heap of length x. initial run.
+     * @param length number of runs
+     * @throws IOException if file doesn't exist
+     */
+    public void fillHeap(int length) throws IOException {
+        heap = new MinHeap(length);
+        for(int i = 0; i < length; i++) {
+            IB[i].setBufferInfo(i, runInfo);
+            update(IB[i].getBufferInfo(), IB[i]);
+        }
+    }
+    
+    /**
+     * remove min from heap. add to outputbuffer.
+     * increment the inputbuffer that removed the value
+     * @throws IOException
+     */
+    public void increment() throws IOException {
+        // remove the min from heap
+        Record record = heap.removeMin();
+        // check for which record the remove belonged too
+        for (int x = 0; x < IB.length; x++) {
+            // if the last removed element is same as min value
+            if (IB[x].getBufferInfo()[2] == record.getKey()) {
+                // we update by adding next value in that IB
+                // and update the buffer info. given there is 
+                // still more to read in the run
+                if(IBHelper(IB[x])) {
+                    update(IB[x].getBufferInfo(), IB[x]);
+                }
+                break;
+            }
+        }
+        output.addRecord(record);
+    }
+    
+    /**
+     * checks if we should continue reading or not from the inputBuffer
+     * @param iP the input buffer
+     * @return if we should continue reading
+     */
+    private boolean IBHelper(InputBuffer iP) {
+        return iP.getBufferInfo()[0] != iP.getBufferInfo()[1];
+
+    }
+    
+    
+    
+    
+    /**
+     * fill the empty heap when more than or equal to 8 run
      * @throws IOException when file has error
      */
-    public void fillHeap() throws IOException {
+    public void fillHeapMax() throws IOException {
         // instantiate the heap
         heap = new MinHeap(8);
         
@@ -95,9 +160,12 @@ public class newMultiwayMerge {
      * @throws IOException when file doesn't exist
      */
     public void update(double[] bufferInfo, InputBuffer buffer) throws IOException {
+        // reads the next record and inserts it
         Record record1 = buffer.readRecord();
         heap.insert(record1);
+        // adds one to the numbers of records added
         bufferInfo[0]++;
+        // updates the last removed value
         bufferInfo[2] = record1.getKey();
     }
     
@@ -107,7 +175,7 @@ public class newMultiwayMerge {
      * 
      * @param offset
      *            offset in the runsInfo
-     * @return records read, number to read, last read key value
+     * @return records read, total needed to read, last read key value
      * @throws IOException if file not found
      */
     public double[] bufferHelper(int offset, InputBuffer buffer) throws IOException {
