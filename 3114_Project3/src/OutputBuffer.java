@@ -14,7 +14,7 @@ public class OutputBuffer {
 
     // field
     private Record[] records = new Record[512];
-    private int size = 0;
+    private int size;
     private int capacity = 512;
     private RandomAccessFile file;
 
@@ -28,6 +28,7 @@ public class OutputBuffer {
     public OutputBuffer(String fileName) throws FileNotFoundException {
         File runFile = new File(fileName);
         this.file = new RandomAccessFile(runFile, "rw");
+        this.size = 0;
     }
 
     /**
