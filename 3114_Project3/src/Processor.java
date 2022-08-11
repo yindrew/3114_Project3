@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Processor {
@@ -12,12 +11,9 @@ public class Processor {
     
     
     public Processor(String fileName) throws IOException {
-<<<<<<< HEAD
         
         this.sortedFileName = fileName;
-=======
         sortedFileName = fileName;
->>>>>>> ece1500 (fixing multiway merge)
         RS = new ReplacementSelection(fileName);
         RS.getRuns();
 
