@@ -1,4 +1,3 @@
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class MultiWayMergeTest extends student.TestCase {
@@ -74,14 +73,14 @@ public class MultiWayMergeTest extends student.TestCase {
     
     
     public void testWhole() throws IOException {
-        //System.out.println("hi");
         System.out.println();
         System.out.println();
 
         LinkedList<Integer> ll = rS.runsInfo();
         multiMerge = new MultiWayMerge("src/runFile.bin",
             "src/testRunFile.bin", ll);
-        multiMerge.merge(3, 0);
+        
+        multiMerge.merge(3, 0); // merge 3 run 
 
         InputBuffer IB = new InputBuffer("src/testRunFile.bin");
         
@@ -96,9 +95,8 @@ public class MultiWayMergeTest extends student.TestCase {
         assertEquals(count, 10240);
 
         
-        
-        
-
-        
     }
+    
+    
+    
 }
