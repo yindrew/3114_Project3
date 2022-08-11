@@ -1,7 +1,11 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-
+/**
+ * Multiway merge
+ * @author yindrew
+ * @version 2022.08.11
+ */
 public class MultiwayMerge {
     private int[] runInfo; 
     private MinHeap heap;
@@ -12,7 +16,12 @@ public class MultiwayMerge {
         throws FileNotFoundException {
         IB = new InputBuffer[8];
         this.runInfo = runInfo.toArray();
+<<<<<<< HEAD
 
+=======
+        
+        
+>>>>>>> ece1500 (fixing multiway merge)
         for (int x = 0; x < IB.length; x++) {
             IB[x] = new InputBuffer(in);
         }
@@ -95,29 +104,16 @@ public class MultiwayMerge {
         heap = new MinHeap(8);
         
         // get helper values for the buffers
-        double[] IB1Info = bufferHelper(0, IB1);
-        double[] IB2Info = bufferHelper(1, IB2);
-        double[] IB3Info = bufferHelper(2, IB3);
-        double[] IB4Info = bufferHelper(3, IB4);
-        double[] IB5Info = bufferHelper(4, IB5);
-        double[] IB6Info = bufferHelper(5, IB6);
-        double[] IB7Info = bufferHelper(6, IB7); 
-        double[] IB8Info = bufferHelper(7, IB8);
+
         
         // adds a record into heap, increments helper values
         // helper values - numbers of records read, last read key value
-        update(IB1Info, IB1);
-        update(IB2Info, IB2);
-        update(IB3Info, IB3);
-        update(IB4Info, IB4);
-        update(IB5Info, IB5);
-        update(IB6Info, IB6);
-        update(IB7Info, IB7);
-        update(IB8Info, IB8);
 
         
     }
+
     
+
     /**
      * adds a record to heap
      * @param bufferInfo helper information for buffer

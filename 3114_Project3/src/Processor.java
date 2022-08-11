@@ -10,9 +10,14 @@ public class Processor {
     private String tempFileName = "src/runFile.bin";
     private int tempName = 0;
     
+    
     public Processor(String fileName) throws IOException {
+<<<<<<< HEAD
         
         this.sortedFileName = fileName;
+=======
+        sortedFileName = fileName;
+>>>>>>> ece1500 (fixing multiway merge)
         RS = new ReplacementSelection(fileName);
         RS.getRuns();
 
@@ -46,6 +51,8 @@ public class Processor {
         oldName.renameTo(newName);
    
     }
+    
+
     
     /**
      * processes runInfo
