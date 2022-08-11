@@ -26,7 +26,7 @@ public class MultiWayMergeTest extends student.TestCase {
         // ll is the runsInfo we get from replacement selection
         LinkedList<Integer> ll = rS.runsInfo();
         multiMerge = new MultiwayMerge("src/runFile.bin",
-            "src/testRunFile.bin", ll, 8);
+            "src/testRunFile.bin", ll);
         // we first fill the heap of multiway merge with the number of runs given 
         // by the replacement selection
         multiMerge.fillHeap(ll.size());
@@ -52,7 +52,7 @@ public class MultiWayMergeTest extends student.TestCase {
     public void testingIncrement() throws IOException {
         LinkedList<Integer> ll = rS.runsInfo();
         multiMerge = new MultiwayMerge("src/runFile.bin",
-            "src/testRunFile.bin", ll, 8);
+            "src/testRunFile.bin", ll);
         multiMerge.fillHeap(ll.size());
         // increment removes the min and adds from the removed buffers next value
         multiMerge.increment();
@@ -75,7 +75,7 @@ public class MultiWayMergeTest extends student.TestCase {
     public void testWhole() throws IOException {
         LinkedList<Integer> ll = rS.runsInfo();
         multiMerge = new MultiwayMerge("src/runFile.bin",
-            "src/testRunFile.bin", ll, 8);
+            "src/testRunFile.bin", ll);
         multiMerge.fillHeap(ll.size());
         
         
