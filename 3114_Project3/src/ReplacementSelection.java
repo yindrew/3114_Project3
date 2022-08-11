@@ -22,7 +22,7 @@ public class ReplacementSelection {
      */
     public ReplacementSelection(String file) throws IOException {
         inputBuffer = new InputBuffer(file);
-        outputBuffer = new OutputBuffer(file);
+        outputBuffer = new OutputBuffer("src/runFile.bin");
 
         // filled heap - phase 1
         while (!minHeap.isFull() && inputBuffer.getAvaliable() >= 16) {
@@ -30,19 +30,29 @@ public class ReplacementSelection {
         }
 
     }
-
+    
+    /**
+     * getting runs info
+     * @return runs info
+     */
+    public LinkedList<Integer> runsInfo() {
+        return minHeap.getRunInfo();
+        
+    }
 
     /**
      * get the runs of the file
      * 
      * @throws IOException
-     *             when there is a error with iput file
+     *             when there is a error with input file
      */
     public void getRuns() throws IOException {
         // removeMin to output and add from input - phase 2
         while (inputBuffer.getAvaliable() >= 16) {
             if (minHeap.isFull()) {
-                System.out.print(minHeap.removeMin() + " ");
+                Record record = minHeap.removeMin();
+                outputBuffer.addRecord(record);
+                record.printOut();
             }
             else {
                 minHeap.insert(inputBuffer.readRecord());
@@ -51,8 +61,11 @@ public class ReplacementSelection {
 
         for (int x = 0; x < 1024; x++) { // reads last block in
             if (minHeap.isFull()) {
-                System.out.print(minHeap.removeMin() + " ");
-            }
+                Record record = minHeap.removeMin();
+                outputBuffer.addRecord(record);    
+                record.printOut();
+
+                }
             else {
                 minHeap.insert(inputBuffer.readRecord());
             }
@@ -68,11 +81,14 @@ public class ReplacementSelection {
 
     /**
      * clean up the end of the file
+     * @throws IOException when input is empty
      */
-    private void cleanUp() {
+    private void cleanUp() throws IOException {
         while (!minHeap.isEmpty()) {
-            minHeap.removeMin().printOut();
-            ;
+            Record record = minHeap.removeMin();
+            outputBuffer.addRecord(record);    
+            record.printOut();
+
         }
     }
 

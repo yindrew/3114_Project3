@@ -48,7 +48,7 @@ public class LinkedList<T> {
         return size;
     }
 
-
+    
     /**
      * is empty or not
      * 

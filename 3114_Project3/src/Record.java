@@ -22,6 +22,14 @@ public class Record implements Comparable<Record> {
         this.value = value;
 
     }
+    
+    public byte[] toBinary() {
+        ByteBuffer bb = ByteBuffer.allocate(16);
+        bb.putLong(value);
+        bb.putDouble(key);
+        byte[] record = bb.array();
+        return record;
+    }
 
 
     /**

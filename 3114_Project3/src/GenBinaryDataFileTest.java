@@ -48,6 +48,8 @@ public class GenBinaryDataFileTest extends student.TestCase {
     public void testGenerateSorted() throws IOException {
         GenBinaryDataFile.generateSorted("sorted2Blocks.bin", 2);
         assertTrue(new File("src/sorted2Blocks.bin").isFile());
+        
+        GenBinaryDataFile.generateSorted("OutputBufferTest.bin", 2);
 
     }
 

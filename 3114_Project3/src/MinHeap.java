@@ -38,6 +38,14 @@ class MinHeap {
         activeNum = heapSize;
         buildHeap();
     }
+    
+    /**
+     * gets run info and returns it
+     * @return runs info
+     */
+    public LinkedList<Integer> getRunInfo() {
+        return runsInfo;
+    }
 
 
     /**
@@ -243,24 +251,27 @@ class MinHeap {
             activeNum--;
             recordsInRun++;
             lastRemoved = heap[activeNum];
+            runsInfo.add(recordsInRun);
+            recordsInRun = 0;
+
             return heap[activeNum];
         }
 
-        else if (activeNum == 0 && inactiveNum != 0) { // active heap empty
+        else if (activeNum == 0 && inactiveNum != 0) { // active heap empty reset
             int shift = maxSize - inactiveNum;
             for (int x = 0; x < inactiveNum; x++) {
                 heap[x] = heap[x + shift];
             }
-            runsInfo.add(recordsInRun);
-            recordsInRun = 0;
             activeNum = inactiveNum;
             inactiveNum = 0;
+            lastRemoved = new Record(-Double.MAX_VALUE, Long.valueOf(0));
             this.buildHeap();
+            System.out.println();
+
             return removeMin();
         }
 
         else if (activeNum == 0 && inactiveNum == 0) { // active heap and
-                                                       // inactive empty
             return null;
         }
 
