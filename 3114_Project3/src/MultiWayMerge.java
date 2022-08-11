@@ -15,55 +15,83 @@ public class MultiWayMerge {
     
 
     //field
-    private LinkedList<Integer> runInfo;
-    private int[] runsInfo;
-    private RandomAccessFile file;
-    private MinHeap heap;
+    private LinkedList<Integer> runInfo; // number of records in each run in a LL
+    private int[] runsInfo; // Integer form
+    private RandomAccessFile file; // file to read into  
+    private MinHeap heap; // holds the min values of each of 8 Input Buffers
     private boolean ProcessorFlag = false;
     private String fileName;
     private final int blockRecordsNum = 512;
-    
+    private InputBuffer IB0;
+    private InputBuffer IB1;
+    private InputBuffer IB2;
+    private InputBuffer IB3;
+    private InputBuffer IB4;
+    private InputBuffer IB5;
+    private InputBuffer IB6;
+    private InputBuffer IB7;   
+    private OutputBuffer output;
     /**
-     * 
-     * @param runInfo
-     * @param runFile
-     * @throws FileNotFoundException 
+     * empty constructor 
      */
-    public MultiWayMerge(LinkedList<Integer> runInfo, String fileName) throws FileNotFoundException {
+    public MultiWayMerge() {
+        //get info
+    }
+    /**
+     * contructor for multiway merge
+     * @param runInfo the run info for this merge
+     * @param inputFile the file being read
+     * @throws FileNotFoundException when we can't find the file
+     */
+    public MultiWayMerge(LinkedList<Integer> runInfo, String inputFile, String outputFile) throws FileNotFoundException {
         //get info
         this.runInfo = runInfo;
-        this.fileName = fileName;
+        this.fileName = inputFile;
+        IB0 = new InputBuffer(inputFile);
+        IB1 = new InputBuffer(inputFile);
+        IB2 = new InputBuffer(inputFile);
+        IB3 = new InputBuffer(inputFile);
+        IB4 = new InputBuffer(inputFile);
+        IB5 = new InputBuffer(inputFile);
+        IB6 = new InputBuffer(inputFile);
+        IB7 = new InputBuffer(inputFile);
+        output = new OutputBuffer(outputFile);
  
     }
 
+    /**
+     * processes runInfo
+     * @param runsInfo array that shows the different runs
+     */
     public void Processor(int[] runsInfo) {
         int runsNum = runsInfo.length;
         
         int EightWayMergeTimes = runsNum / 8;
         int lastRunsNum = runsNum % 8;
         
-        if (EightWayMergeTimes > 0) {
-            for (int i = 0; i < EightWayMergeTimes; i++) {
-                EightWayMerge();
-            }
-        } else {
+        for (int i = 0; i < EightWayMergeTimes; i++) {
+                //EightWayMerge(runsInfo, i, );
             
-        }
-        
+        }         
     }
-
     
-    public int EightWayMerge(String fileName, OutputBuffer output, int[] runsInfo, int currStart, int runInfoOffset) throws IOException {
-        InputBuffer IB0 = new InputBuffer(fileName);
-        InputBuffer IB1 = new InputBuffer(fileName);
-        InputBuffer IB2 = new InputBuffer(fileName);
-        InputBuffer IB3 = new InputBuffer(fileName);
-        InputBuffer IB4 = new InputBuffer(fileName);
-        InputBuffer IB5 = new InputBuffer(fileName);
-        InputBuffer IB6 = new InputBuffer(fileName);
-        InputBuffer IB7 = new InputBuffer(fileName);
-        
-        //setup buffer ang get info
+    public void fillHeap() {
+        MinHeap heap = new MinHeap(8);
+
+    }
+    
+
+
+    /**
+     * eight way merge
+     * @param output 
+     * @param runsInfo
+     * @param currStart
+     * @param runInfoOffset
+     * @return
+     * @throws IOException
+     */
+    public int EightWayMerge(int[] runsInfo, int currStart, int runInfoOffset) throws IOException {
         int[] IB0Info = BufferHelper(IB0, 0, runsInfo, currStart, runInfoOffset);
         int[] IB1Info = BufferHelper(IB1, 1, runsInfo, currStart, runInfoOffset);
         int[] IB2Info = BufferHelper(IB2, 2, runsInfo, currStart, runInfoOffset);
@@ -71,9 +99,9 @@ public class MultiWayMerge {
         int[] IB4Info = BufferHelper(IB4, 4, runsInfo, currStart, runInfoOffset);
         int[] IB5Info = BufferHelper(IB5, 5, runsInfo, currStart, runInfoOffset);
         int[] IB6Info = BufferHelper(IB6, 6, runsInfo, currStart, runInfoOffset);
-        int[] IB7Info = BufferHelper(IB7, 7, runsInfo, currStart, runInfoOffset);
-        
+        int[] IB7Info = BufferHelper(IB7, 7, runsInfo, currStart, runInfoOffset);        
         //store next merge start record
+        
         int startRecord = 0;
         for (int i = runInfoOffset; i < runInfoOffset + 8; i++) {
             startRecord += runsInfo[i];
@@ -166,11 +194,9 @@ public class MultiWayMerge {
     }
     
     private boolean IBHelper(int[] info) {
-        if (info[1] + 1 == info[0]) {
-            return false;
-        }
         
-        return true;
+        return !(info[1] + 1 == info[0]);
+
     }
     
     /**
@@ -181,7 +207,7 @@ public class MultiWayMerge {
     public int[] runInfoGetter(LinkedList<Integer> runInfo) {
         
         int[] output = new int[runInfo.size()];
-        Node temp = runInfo.getHead();
+        Node<Integer> temp = runInfo.getHead();
         
         for (int i = 0; i < runInfo.size(); i++) {
             output[i] = (int)temp.getElement();

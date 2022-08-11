@@ -76,5 +76,21 @@ public class LinkedList<T> {
         }
         size++;
     }
+    
+    /**
+     * converts to array
+     * @return int array of the linked list
+     */
+    public int[] toArray() {
+        int[] output = new int[size()];
+        Node<T> temp = head;
+
+        for (int i = 0; i < size(); i++) {
+            output[i] = (int)temp.getElement();
+            temp = temp.getNext();
+        }
+
+        return output;
+    }
 
 }

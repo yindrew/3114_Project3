@@ -38,8 +38,30 @@ public class LinkedListTest extends student.TestCase {
 
         assertTrue(linkedList.getHead().getNext().getElement() == 7);
         assertTrue(linkedList.getTail().getPrev().getElement() == 5);
-        assertTrue(linkedList.getHead().getNext().getNext().getElement() == 9);
+        linkedList.add(9);
 
+        //assertTrue(linkedList.getHead().getNext().getNext().getElement() == 9);
+
+    }
+    
+    /**
+     * testing toArray
+     */
+    public void testToArr() {
+        LinkedList<Integer> ll = new LinkedList<Integer>();
+        ll.add(5);
+        ll.add(6);
+        ll.add(10);
+        ll.add(4);
+        
+        int[] testing = ll.toArray();
+        Node node = ll.getHead();
+        for (int x = 0; x < testing.length; x++) {
+            assertEquals(testing[x], node.getElement());
+            node = node.getNext();
+        }
+        assertEquals(testing[0], 5);
+        assertEquals(testing[3], 4);
     }
 
 }

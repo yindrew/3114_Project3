@@ -34,8 +34,12 @@ public class InputBufferTest extends student.TestCase {
      * testing reading 
      * @throws IOException when file doesn't exist
      */
-    public void testReading() {
+    public void testReading() throws IOException {
+        Record record = iB5.readRecord();
+        Record record1 = iB6.readRecord();
         
+        assertEquals(record.getKey(), record1.getKey(), 0.0);
+
     }
 
 
