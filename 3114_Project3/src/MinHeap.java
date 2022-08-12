@@ -16,6 +16,9 @@ class MinHeap {
 
     /**
      * empty constructor
+     * 
+     * @param maxSize
+     *            the max size minHeap can be
      */
     public MinHeap(int maxSize) {
         heap = new Record[maxSize];
@@ -38,9 +41,11 @@ class MinHeap {
         activeNum = heapSize;
         buildHeap();
     }
-    
+
+
     /**
      * gets run info and returns it
+     * 
      * @return runs info
      */
     public LinkedList<Integer> getRunInfo() {
@@ -143,7 +148,7 @@ class MinHeap {
     /**
      * inserting a Record into the heap
      * 
-     * @param key
+     * @param record
      *            value being inserted into the heap
      */
     public void insert(Record record) {
@@ -257,7 +262,8 @@ class MinHeap {
             return heap[activeNum];
         }
 
-        else if (activeNum == 0 && inactiveNum != 0) { // active heap empty reset
+        else if (activeNum == 0 && inactiveNum != 0) { // active heap empty
+                                                       // reset
             int shift = maxSize - inactiveNum;
             for (int x = 0; x < inactiveNum; x++) {
                 heap[x] = heap[x + shift];

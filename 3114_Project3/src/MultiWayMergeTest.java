@@ -1,5 +1,11 @@
 import java.io.IOException;
 
+/**
+ * testing multiway merge
+ * 
+ * @author yindrew
+ * @version 2022.08.12
+ */
 public class MultiWayMergeTest extends student.TestCase {
     private MultiWayMerge multiMerge;
     private ReplacementSelection rS;
@@ -95,15 +101,15 @@ public class MultiWayMergeTest extends student.TestCase {
 
         multiMerge.merge(3, 0); // merge 3 run
 
-        InputBuffer IB = new InputBuffer("src/multiMerge20.bin");
+        InputBuffer iB = new InputBuffer("src/multiMerge20.bin");
 
         Record prev = new Record(-Double.MAX_VALUE, Long.valueOf(0)); // smallest
                                                                       // number
         int count = 0; // number of values read - should be 10240
 
-        while (IB.getAvaliable() >= 16 || IB.moreToRead()) {
+        while (iB.getAvaliable() >= 16 || iB.moreToRead()) {
             count++;
-            Record cur = IB.readRecord();
+            Record cur = iB.readRecord();
             System.out.print(cur.getKey() + " ");
             assert (prev.getKey() <= cur.getKey());
             prev = cur;
@@ -122,26 +128,26 @@ public class MultiWayMergeTest extends student.TestCase {
     public void testWhole1() throws IOException {
         System.out.println();
         System.out.println();
-        ReplacementSelection rS = new ReplacementSelection(
-            "src/reverse60.bin", "src/replacement60.bin");
-        rS.getRuns();
+        ReplacementSelection rS1 = new ReplacementSelection("src/reverse60.bin",
+            "src/replacement60.bin");
+        rS1.getRuns();
         System.out.println();
 
-        LinkedList<Integer> ll = rS.runsInfo(); // get run info from the rS
+        LinkedList<Integer> ll = rS1.runsInfo(); // get run info from the rS
         multiMerge = new MultiWayMerge("src/replacement60.bin",
             "src/Merge60.bin", ll);
 
         multiMerge.merge(8, 0); // merge 3 run
 
-        InputBuffer IB = new InputBuffer("src/Merge60.bin");
+        InputBuffer iB1 = new InputBuffer("src/Merge60.bin");
 
         Record prev = new Record(-Double.MAX_VALUE, Long.valueOf(0)); // smallest
                                                                       // number
         int count = 0; // number of values read - should be 10240
 
-        while (IB.getAvaliable() >= 16 || IB.moreToRead()) {
+        while (iB1.getAvaliable() >= 16 || iB1.moreToRead()) {
             count++;
-            Record cur = IB.readRecord();
+            Record cur = iB1.readRecord();
             System.out.print(cur.getKey() + " ");
             assert (prev.getKey() <= cur.getKey());
             prev = cur;

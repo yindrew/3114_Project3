@@ -33,6 +33,9 @@ public class MinHeapTest extends student.TestCase {
         multipleRuns = new MinHeap(3);
     }
 
+    /**
+     * testing multiple runs for min heap
+     */
     public void testMultipleRuns() {
         multipleRuns.insert(3);
         multipleRuns.insert(4);

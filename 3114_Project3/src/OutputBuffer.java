@@ -22,7 +22,7 @@ public class OutputBuffer {
     /**
      * constructor
      * 
-     * @param recordNum
+     * @param fileName file name
      * @throws FileNotFoundException
      */
     public OutputBuffer(String fileName) throws FileNotFoundException {
@@ -40,7 +40,10 @@ public class OutputBuffer {
         return size;
     }
 
-
+    /**
+     * return the last record in the output buffer
+     * @return the last record
+     */
     public Record lastRecord() {
         return records[size - 1];
     }

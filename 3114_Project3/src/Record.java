@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
  * 
  * @author CS Staff
  * @version 2022
+ * 
  */
 public class Record implements Comparable<Record> {
 
@@ -14,8 +15,8 @@ public class Record implements Comparable<Record> {
     /**
      * Constructor for the Record class
      * 
-     * @param key
-     * @param value
+     * @param key key value
+     * @param value value of key
      */
     public Record(double key, Long value) {
         this.key = key;
@@ -23,6 +24,10 @@ public class Record implements Comparable<Record> {
 
     }
     
+    /**
+     * converting to binary arr
+     * @return binary arr
+     */
     public byte[] toBinary() {
         ByteBuffer bb = ByteBuffer.allocate(16);
         bb.putLong(value);
@@ -54,7 +59,9 @@ public class Record implements Comparable<Record> {
         return key;
     }
 
-
+    /**
+     * printing out as a string
+     */
     public void printOut() {
         System.out.print(toString() + " ");
 
@@ -72,15 +79,10 @@ public class Record implements Comparable<Record> {
 
 
     /**
-     * Compare Two Records based on their keys
-     * 
-     * @param o
-     *            - The Record to be compared.
-     * @return A negative integer, zero, or a positive integer as this employee
-     *         is less than, equal to, or greater than the supplied record
-     *         object.
+     * compare two records
+     * @param toBeCompared the record to be compared to
+     * @return if its greater or less than
      */
-    @Override
     public int compareTo(Record toBeCompared) {
         return Double.compare(key, toBeCompared.getKey());
     }

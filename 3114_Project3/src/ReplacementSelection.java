@@ -14,10 +14,12 @@ public class ReplacementSelection {
     /**
      * constructor
      * 
-     * @param file
+     * @param inFile
      *            input file
+     * @param outputFile
+     *            output file
      * @throws IOException
-     *             when error with input/output files
+     *             when there is an error
      */
     public ReplacementSelection(String inFile, String outputFile)
         throws IOException {

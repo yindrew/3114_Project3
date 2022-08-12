@@ -11,7 +11,7 @@ public class MultiWayMerge {
     private int[] runInfo;
     private MinHeap heap;
     private OutputBuffer output;
-    private InputBuffer[] IB;
+    private InputBuffer[] iBuffers;
 
     /**
      * constructor
@@ -27,10 +27,10 @@ public class MultiWayMerge {
      */
     public MultiWayMerge(String in, String out, LinkedList<Integer> runInfo)
         throws FileNotFoundException {
-        IB = new InputBuffer[8];
+        iBuffers = new InputBuffer[8];
         this.runInfo = runInfo.toArray();
-        for (int x = 0; x < IB.length; x++) {
-            IB[x] = new InputBuffer(in);
+        for (int x = 0; x < iBuffers.length; x++) {
+            iBuffers[x] = new InputBuffer(in);
         }
         output = new OutputBuffer(out);
 
@@ -70,7 +70,7 @@ public class MultiWayMerge {
      * @return input buffer
      */
     public InputBuffer[] getIB() {
-        return IB;
+        return iBuffers;
     }
 
 
@@ -97,8 +97,8 @@ public class MultiWayMerge {
     public void fillHeap(int length, int offset) throws IOException {
         heap = new MinHeap(length);
         for (int i = 0; i < length; i++) {
-            IB[i].setBufferInfo(i + offset, runInfo);
-            update(IB[i].getBufferInfo(), IB[i]);
+            iBuffers[i].setBufferInfo(i + offset, runInfo);
+            update(iBuffers[i].getBufferInfo(), iBuffers[i]);
 
         }
     }
@@ -114,14 +114,14 @@ public class MultiWayMerge {
         // remove the min from heap
         Record record = heap.removeMin();
         // check for which record the remove belonged too
-        for (int x = 0; x < IB.length; x++) {
+        for (int x = 0; x < iBuffers.length; x++) {
             // if the last removed element is same as min value
-            if (IB[x].getBufferInfo()[2] == record.getKey()) {
+            if (iBuffers[x].getBufferInfo()[2] == record.getKey()) {
                 // we update by adding next value in that IB
                 // and update the buffer info. given there is
                 // still more to read in the run
-                if (IBHelper(IB[x])) {
-                    update(IB[x].getBufferInfo(), IB[x]);
+                if (iBHelper(iBuffers[x])) {
+                    update(iBuffers[x].getBufferInfo(), iBuffers[x]);
                 }
                 break;
             }
@@ -138,7 +138,7 @@ public class MultiWayMerge {
      *            the input buffer
      * @return if we should continue reading
      */
-    private boolean IBHelper(InputBuffer iP) {
+    private boolean iBHelper(InputBuffer iP) {
         return iP.getBufferInfo()[0] != iP.getBufferInfo()[1];
 
     }
