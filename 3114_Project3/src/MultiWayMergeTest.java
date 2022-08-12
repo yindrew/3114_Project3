@@ -10,7 +10,7 @@ public class MultiWayMergeTest extends student.TestCase {
      * @throws IOException
      */
     public void setUp() throws IOException {
-        rS = new ReplacementSelection("src/reverse20.bin");
+        rS = new ReplacementSelection("src/reverse20.bin", "src/replacement.bin");
         rS.getRuns();
 
     }
@@ -24,7 +24,7 @@ public class MultiWayMergeTest extends student.TestCase {
         
         // ll is the runsInfo we get from replacement selection
         LinkedList<Integer> ll = rS.runsInfo();
-        multiMerge = new MultiWayMerge("src/runFile.bin",
+        multiMerge = new MultiWayMerge("src/replacement.bin",
             "src/testRunFile.bin", ll);
         // we first fill the heap of multiway merge with the number of runs given 
         // by the replacement selection
@@ -50,7 +50,7 @@ public class MultiWayMergeTest extends student.TestCase {
 
     public void testingIncrement() throws IOException {
         LinkedList<Integer> ll = rS.runsInfo();
-        multiMerge = new MultiWayMerge("src/runFile.bin",
+        multiMerge = new MultiWayMerge("src/replacement.bin",
             "src/testRunFile.bin", ll);
         multiMerge.fillHeap(ll.size(), 0);
         // increment removes the min and adds from the removed buffers next value
@@ -77,7 +77,7 @@ public class MultiWayMergeTest extends student.TestCase {
         System.out.println();
 
         LinkedList<Integer> ll = rS.runsInfo();
-        multiMerge = new MultiWayMerge("src/runFile.bin",
+        multiMerge = new MultiWayMerge("src/replacement.bin",
             "src/testRunFile.bin", ll);
         
         multiMerge.merge(3, 0); // merge 3 run 
@@ -89,6 +89,7 @@ public class MultiWayMergeTest extends student.TestCase {
         while(IB.getAvaliable() >= 16 || IB.moreToRead()) {
             count++;
             Record cur = IB.readRecord();
+            System.out.print(cur.getKey() + " ");
             assert(prev.getKey() <= cur.getKey());
             prev = cur;
         }

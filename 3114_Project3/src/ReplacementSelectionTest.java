@@ -13,7 +13,7 @@ public class ReplacementSelectionTest extends student.TestCase {
      */
     public void setUp() throws IOException {
         
-        rSelect = new ReplacementSelection("src/reverse20.bin");
+        rSelect = new ReplacementSelection("src/reverse20.bin", "src/reverse20replaced.bin");
 
     }
     

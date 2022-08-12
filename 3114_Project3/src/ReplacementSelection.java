@@ -19,9 +19,9 @@ public class ReplacementSelection {
      * @throws IOException
      *             when error with input/output files
      */
-    public ReplacementSelection(String file) throws IOException {
-        inputBuffer = new InputBuffer(file);
-        outputBuffer = new OutputBuffer("src/runFile.bin");
+    public ReplacementSelection(String inFile, String outputFile) throws IOException {
+        inputBuffer = new InputBuffer(inFile);
+        outputBuffer = new OutputBuffer(outputFile);
 
         // filled heap - phase 1
         while (!minHeap.isFull() && inputBuffer.getAvaliable() >= 16) {
@@ -51,7 +51,7 @@ public class ReplacementSelection {
             if (minHeap.isFull()) {
                 Record record = minHeap.removeMin();
                 outputBuffer.addRecord(record);
-                record.printOut();
+                //record.printOut();
             }
             else {
                 minHeap.insert(inputBuffer.readRecord());
@@ -74,7 +74,7 @@ public class ReplacementSelection {
         while (!minHeap.isEmpty()) {
             Record record = minHeap.removeMin();
             outputBuffer.addRecord(record);    
-            record.printOut();
+            //record.printOut();
 
 
         }

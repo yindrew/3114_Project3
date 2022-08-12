@@ -100,7 +100,7 @@ public class MultiWayMerge {
                 break;
             }
         }
-        System.out.print(record.getKey() + " ");
+        //System.out.print(record.getKey() + " ");
         output.addRecord(record);
     }
     

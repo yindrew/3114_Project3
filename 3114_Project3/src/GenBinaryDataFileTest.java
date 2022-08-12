@@ -76,6 +76,10 @@ public class GenBinaryDataFileTest extends student.TestCase {
     public void testGenerateReverseSorted2() throws IOException {
         GenBinaryDataFile.generateReverseSorted("reverseSorted2Block.bin", 2);
         GenBinaryDataFile.generateReverseSorted("reverse20.bin", 20);
+        GenBinaryDataFile.generateReverseSorted("reverse20multi.bin", 20);
+
+        GenBinaryDataFile.generateReverseSorted("reverse60.bin", 60);
+
 
         assertTrue(new File("src/reverseSorted2Block.bin").isFile());
         assertTrue(new File("src/reverse20.bin").isFile());

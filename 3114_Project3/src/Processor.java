@@ -6,7 +6,7 @@ public class Processor {
     //field
     private ReplacementSelection RS;
     private String sortedFileName;
-    private String tempFileName = "src/runFile.bin";
+    private String tempFileName;
     private int tempName = 0;
     
     
@@ -14,7 +14,9 @@ public class Processor {
         
         this.sortedFileName = fileName;
         sortedFileName = fileName;
-        RS = new ReplacementSelection(fileName);
+        int random = (int) (Math.random() * 100);
+        RS = new ReplacementSelection(fileName, "src/" + random + ".bin");
+        tempFileName = "src/" + random + ".bin";
         RS.getRuns();
 
         LinkedList<Integer> temp = RS.runsInfo();
@@ -109,17 +111,11 @@ public class Processor {
         
         //get all bytes number
         int byteNum = IB.getAvaliable();
-        int blokNum = 0;
+        int blokNum = byteNum / 8192;
+        int recordNum = blokNum * 512;
         
-        //get blocks number
-        if (byteNum % 8192 > 0) {
-            blokNum = byteNum / 8192 + 1;
-        } else {
-            blokNum = byteNum / 8192;
-        }
         
-        Record[] printRecord = null;
-        
+        Record[] printRecord = new Record[recordNum];
         //get all first record in each block
         for (int i = 0; i < blokNum; i++) {
             printRecord[i] = IB.readBlock().getRecords()[0];
@@ -127,10 +123,10 @@ public class Processor {
         
         int blockCounter = 0;
         int printCounter = 0;
-        
+        int count = 0;
         //print
         while (blockCounter < blokNum) {
-
+            count++;
             //Check if new line
             if (printCounter == 5) {
                 System.out.print("\n");
@@ -147,5 +143,6 @@ public class Processor {
             blockCounter++;
             printCounter++;
         }
+        System.out.println(count);
     }
 }
