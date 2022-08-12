@@ -5,6 +5,8 @@
  * @version 2022.08.10
  */
 public class LinkedListTest extends student.TestCase {
+    
+    //field
     private LinkedList<Integer> linkedList;
 
     /**
@@ -39,8 +41,6 @@ public class LinkedListTest extends student.TestCase {
         assertTrue(linkedList.getHead().getNext().getElement() == 7);
         assertTrue(linkedList.getTail().getPrev().getElement() == 5);
         linkedList.add(9);
-
-        //assertTrue(linkedList.getHead().getNext().getNext().getElement() == 9);
 
     }
     

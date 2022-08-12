@@ -7,6 +7,8 @@
  *            type
  */
 public class LinkedList<T> {
+    
+    //field
     private Node<T> head;
     private Node<T> tail;
     private int size;
@@ -86,7 +88,7 @@ public class LinkedList<T> {
         Node<T> temp = head;
 
         for (int i = 0; i < size(); i++) {
-            output[i] = (int)temp.getElement();
+            output[i] = (int) temp.getElement();
             temp = temp.getNext();
         }
 

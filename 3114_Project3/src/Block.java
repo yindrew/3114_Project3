@@ -5,8 +5,8 @@
  * @version 2022.08.10
  */
 public class Block {
-    private int n = 0;
-    private int size = 512;
+    
+    //field
     private Record[] recordArr = new Record[512];
 
     /**
@@ -34,7 +34,8 @@ public class Block {
      *            the starting index
      * @param end
      *            the ending index
-     * @return the sliced array
+     * @return array
+     *            the sliced array
      */
     private byte[] slice(byte[] arr, int start, int end) {
         byte[] slice = new byte[end - start];
@@ -51,6 +52,7 @@ public class Block {
      * getter method for the record array
      * 
      * @return the records
+     *            records
      */
     public Record[] getRecords() {
         return recordArr;
@@ -60,7 +62,8 @@ public class Block {
     /**
      * toString method
      * 
-     * @return the array of records
+     * @return String
+     *          the array of records
      */
     public String toString() {
         String sum = "";

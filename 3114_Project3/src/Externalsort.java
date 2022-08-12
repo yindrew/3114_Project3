@@ -27,6 +27,7 @@ import java.io.IOException;
 public class Externalsort {
     public static void main(String args[]) throws IOException {
 
+        //star process
         new Processor(args[0]);
 
     }

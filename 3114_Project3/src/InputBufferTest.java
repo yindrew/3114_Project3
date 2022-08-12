@@ -8,12 +8,13 @@ import java.io.IOException;
  * @version 2022.08.10
  */
 public class InputBufferTest extends student.TestCase {
+    
+    //field
     private InputBuffer inputBuffer;
     private InputBuffer inputBuffer2;
     private InputBuffer inputBuffer3;
     private InputBuffer inputBuffer4;
     private InputBuffer inputBuffer5;
-
     private InputBuffer iB5;
     private InputBuffer iB6;
 
