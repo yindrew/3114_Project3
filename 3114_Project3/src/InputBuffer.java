@@ -8,19 +8,18 @@ import java.nio.ByteBuffer;
 /**
  * Input buffer
  * 
- * @author yindrew
+ * @author yindrew hadenlee
  * @version 2022.08.10
  */
 public class InputBuffer {
+    
+    //field
     private BufferedInputStream inputStream;
     private FileInputStream fileInputStream;
     private ByteBuffer buffer = ByteBuffer.allocate(8192);
     private byte[] dataArray = buffer.array();
     private double[] bufferInfo;
     private int index = 8192;
-
-
-
 
     /**
      * constructor for the input buffer
@@ -54,9 +53,10 @@ public class InputBuffer {
     /**
      * reads a block from the file
      * 
-     * @return a block of data
+     * @return block
+     *              a block of data
      * @throws IOException
-     *             if there isn't output
+     *              if there isn't output
      */
     public Block readBlock() throws IOException {
 
@@ -83,7 +83,8 @@ public class InputBuffer {
      *            the starting index
      * @param end
      *            the ending index
-     * @return the sliced array
+     * @return array
+     *            the sliced array
      */
     private byte[] slice(byte[] arr, int start, int end) {
         byte[] slice = new byte[end - start];
@@ -99,7 +100,8 @@ public class InputBuffer {
     /**
      * reads a record from the buffer
      * 
-     * @return the next buffer
+     * @return Record
+     *             the next buffer
      * @throws IOException
      *             if we there isn't input
      */
@@ -109,8 +111,7 @@ public class InputBuffer {
             inputStream.read(dataArray);
             index = 0;
             return readRecord();
-        }
-        else {
+        } else {
             byte[] sliced = slice(dataArray, index, index + 16);
             Record record = new Record(sliced);
             index += 16;
@@ -121,11 +122,13 @@ public class InputBuffer {
     
     /**
      * check if theres more to read
-     * @return true or false if index is less than 8192
+     * @return true or false 
+     *           if index is less than 8192
      */
     public boolean moreToRead() {
         return (index < 8192);
     }
+    
     /**
      * sets the buffers position
      * 
