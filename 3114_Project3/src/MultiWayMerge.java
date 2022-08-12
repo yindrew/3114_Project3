@@ -59,7 +59,7 @@ public class MultiWayMerge {
             increment();
         }
         output.write();
-        output.closeFile();
+        //output.closeFile();
 
     }
 
@@ -71,16 +71,6 @@ public class MultiWayMerge {
      */
     public InputBuffer[] getIB() {
         return iBuffers;
-    }
-
-
-    /**
-     * gets the output buffer
-     * 
-     * @return output buffer
-     */
-    public OutputBuffer getOutput() {
-        return output;
     }
 
 

@@ -27,8 +27,8 @@ public class Processor {
 
         this.sortedFileName = fileName;
         int random = (int)(Math.random() * 100);
-        rS = new ReplacementSelection(fileName, "src/processorTest.bin");
-        tempFileName = "src/processorTest.bin";
+        rS = new ReplacementSelection(fileName, "processorTest.bin");
+        tempFileName = "processorTest.bin";
         rS.getRuns();
 
         LinkedList<Integer> temp = rS.runsInfo();
@@ -72,7 +72,7 @@ public class Processor {
      * 
      * @param runsInfo
      *            linked list of run info
-     * @param tempFileName
+     * @param tFileName
      *            temporary file
      * @return updated run info
      * @throws IOException
@@ -80,7 +80,7 @@ public class Processor {
      */
     public LinkedList<Integer> mergeProcessor(
         LinkedList<Integer> runsInfo,
-        String tempFileName)
+        String tFileName)
         throws IOException {
 
         int runsNum = runsInfo.toArray().length;
@@ -91,7 +91,7 @@ public class Processor {
 
         int[] recordsInfo = runsInfo.toArray();
 
-        MultiWayMerge merge = new MultiWayMerge(tempFileName, "src/" + tempName
+        MultiWayMerge merge = new MultiWayMerge(tFileName, tempName
             + ".bin", runsInfo);
 
         // eight way
@@ -114,7 +114,7 @@ public class Processor {
         }
         ret.add(sum);
 
-        this.tempFileName = "src/" + tempName + ".bin";
+        this.tempFileName = tempName + ".bin";
         tempName++;
         return ret;
 

@@ -41,6 +41,7 @@ public class LinkedListTest extends student.TestCase {
         assertTrue(linkedList.getHead().getNext().getElement() == 7);
         assertTrue(linkedList.getTail().getPrev().getElement() == 5);
         linkedList.add(9);
+        assertTrue(linkedList.getTail().getElement() == 9);
 
     }
     
@@ -55,9 +56,9 @@ public class LinkedListTest extends student.TestCase {
         ll.add(4);
         
         int[] testing = ll.toArray();
-        Node node = ll.getHead();
+        Node<Integer> node = ll.getHead();
         for (int x = 0; x < testing.length; x++) {
-            assertEquals(testing[x], node.getElement());
+            assertTrue(testing[x] == node.getElement());
             node = node.getNext();
         }
         assertEquals(testing[0], 5);

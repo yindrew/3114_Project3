@@ -88,7 +88,7 @@ public class OutputBuffer {
      * 
      * @return An array of Records in byte form
      */
-    public byte[] convertRecsToByteForm() {
+    private byte[] convertRecsToByteForm() {
         byte[] recsByteForm = new byte[8192];
         int byteArrIndex = 0;
         // Loop through all Record objects, storing their byte form

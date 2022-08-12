@@ -103,7 +103,6 @@ public class GenBinaryDataFile {
 
         DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(
             new FileOutputStream(filename)));
-        Random randGen = new Random();
 
         for (int i = numRecords; i > 0; i--) {
             long value = Long.valueOf(i);

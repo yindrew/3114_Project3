@@ -15,35 +15,11 @@ public class ReplacementSelectionTest extends student.TestCase {
      */
     public void setUp() throws IOException {
 
-        rSelect = new ReplacementSelection("src/reverse20.bin",
-            "src/reverse20replaced.bin");
-        rSelect1 = new ReplacementSelection("src/reverseSorted2Block.bin",
-            "src/reverse2replaced.bin");
+        rSelect = new ReplacementSelection("reverse20.bin",
+            "reverse20replaced.bin");
+        rSelect1 = new ReplacementSelection("reverse2.bin",
+            "reverse2replaced.bin");
 
-    }
-
-
-    /**
-     * testing a run with less than 8 blocks
-     * 
-     * @throws IOException
-     *             when files dont work
-     */
-    public void testRuns1() throws IOException {
-        rSelect1.getRuns();
-        InputBuffer ip = new InputBuffer("src/reverse2replaced.bin");
-
-        int count = 0;
-        double prev = -10;
-        while (ip.moreToRead() || ip.getAvaliable() >= 16) {
-            Record record = ip.readRecord();
-            record.printOut();
-            assertTrue(record.getKey() >= prev);
-            prev = record.getKey();
-            count++;
-        }
-        assertTrue(count == 1024);
-        System.out.println();
     }
 
 
@@ -55,7 +31,7 @@ public class ReplacementSelectionTest extends student.TestCase {
      */
     public void testGetRuns() throws IOException {
         rSelect.getRuns();
-        InputBuffer ip = new InputBuffer("src/reverse20replaced.bin");
+        InputBuffer ip = new InputBuffer("reverse20replaced.bin");
 
         LinkedList<Integer> ll = rSelect.runsInfo();
         Node<Integer> node = ll.getHead();
@@ -76,6 +52,30 @@ public class ReplacementSelectionTest extends student.TestCase {
         assertTrue(count == 10240);
         System.out.println();
 
+    }
+
+
+    /**
+     * testing a run with less than 8 blocks
+     * 
+     * @throws IOException
+     *             when files dont work
+     */
+    public void testRuns1() throws IOException {
+        rSelect1.getRuns();
+        InputBuffer ip = new InputBuffer("reverse2replaced.bin");
+
+        int count = 0;
+        double prev = -10;
+        while (ip.moreToRead() || ip.getAvaliable() >= 16) {
+            Record record = ip.readRecord();
+            record.printOut();
+            assertTrue(record.getKey() >= prev);
+            prev = record.getKey();
+            count++;
+        }
+        assertTrue(count == 1024);
+        System.out.println();
     }
 
 }

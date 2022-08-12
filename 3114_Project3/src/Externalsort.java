@@ -25,7 +25,13 @@ import java.io.IOException;
  * @version 2022.08.10
  */
 public class Externalsort {
-    public static void main(String args[]) throws IOException {
+    
+    /**
+     * main method
+     * @param args file we use for processor
+     * @throws IOException if file doesn't exist
+     */
+    public static void main(String[] args) throws IOException {
 
         //star process
         new Processor(args[0]);

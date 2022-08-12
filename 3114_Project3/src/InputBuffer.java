@@ -12,8 +12,8 @@ import java.nio.ByteBuffer;
  * @version 2022.08.10
  */
 public class InputBuffer {
-    
-    //field
+
+    // field
     private BufferedInputStream inputStream;
     private FileInputStream fileInputStream;
     private ByteBuffer buffer = ByteBuffer.allocate(8192);
@@ -26,8 +26,6 @@ public class InputBuffer {
      * 
      * @param fileName
      *            the file being read
-     * @param numberOfBlocks
-     *            number of blocks
      * @throws FileNotFoundException
      *             if we cant find the file
      */
@@ -49,24 +47,24 @@ public class InputBuffer {
     }
 
 
-
     /**
      * reads a block from the file
      * 
      * @return block
-     *              a block of data
+     *         a block of data
      * @throws IOException
-     *              if there isn't output
+     *             if there isn't output
      */
     public Block readBlock() throws IOException {
 
-        ByteBuffer buffer = ByteBuffer.allocate(8192);
-        byte[] dataArray = buffer.array(); // buffer for 1 block
+        ByteBuffer blockBuffer = ByteBuffer.allocate(8192);
+        byte[] dataArray1 = blockBuffer.array(); // buffer for 1 block
         Block block = null;
-        if (inputStream.read(dataArray) != -1) { // reads from inputStream into
-                                                 // data array.
-            block = new Block(dataArray); // block takes a 8192 sized byte array
-                                          // and converts it into 512 records
+        if (inputStream.read(dataArray1) != -1) { // reads from inputStream into
+                                                  // data array.
+            block = new Block(dataArray1); // block takes a 8192 sized byte
+                                           // array
+                                           // and converts it into 512 records
 
         }
         return block;
@@ -84,7 +82,7 @@ public class InputBuffer {
      * @param end
      *            the ending index
      * @return array
-     *            the sliced array
+     *         the sliced array
      */
     private byte[] slice(byte[] arr, int start, int end) {
         byte[] slice = new byte[end - start];
@@ -101,7 +99,7 @@ public class InputBuffer {
      * reads a record from the buffer
      * 
      * @return Record
-     *             the next buffer
+     *         the next buffer
      * @throws IOException
      *             if we there isn't input
      */
@@ -111,7 +109,8 @@ public class InputBuffer {
             inputStream.read(dataArray);
             index = 0;
             return readRecord();
-        } else {
+        }
+        else {
             byte[] sliced = slice(dataArray, index, index + 16);
             Record record = new Record(sliced);
             index += 16;
@@ -119,16 +118,19 @@ public class InputBuffer {
         }
 
     }
-    
+
+
     /**
      * check if theres more to read
-     * @return true or false 
-     *           if index is less than 8192
+     * 
+     * @return true or false
+     *         if index is less than 8192
      */
     public boolean moreToRead() {
         return (index < 8192);
     }
-    
+
+
     /**
      * sets the buffers position
      * 

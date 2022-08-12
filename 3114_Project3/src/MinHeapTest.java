@@ -23,25 +23,32 @@ public class MinHeapTest extends student.TestCase {
         reverse = new MinHeap(h, 10);
 
         complete = new MinHeap(5);
+
         Record[] forwardRecord = new Record[5];
         for (int x = 0; x < 5; x++) {
             forwardRecord[x] = new Record(x, Long.valueOf(0));
         }
         complete.insert(forwardRecord);
 
-        
         multipleRuns = new MinHeap(3);
     }
+
 
     /**
      * testing multiple runs for min heap
      */
     public void testMultipleRuns() {
+        MinHeap empty = new MinHeap(2);
+        assertTrue(empty.isEmpty());
+        empty.insert(3);
+        assertFalse(empty.isEmpty());
+        empty.removeMin();
+        assertEquals(empty.getLastRemoved().getKey(), 3, 0.0);
         multipleRuns.insert(3);
         multipleRuns.insert(4);
         multipleRuns.insert(5);
         // 3 4 5
-        
+
         assertEquals(multipleRuns.removeMin().getKey(), 3, 0.0); // 4 5
         multipleRuns.insert(2); // 4 5 2
         assertEquals(multipleRuns.removeMin().getKey(), 4, 0.0); // 5 2
@@ -49,22 +56,21 @@ public class MinHeapTest extends student.TestCase {
         assertEquals(multipleRuns.removeMin().getKey(), 5, 0.0); // 2 1
         multipleRuns.insert(0); // 2 1 0
         assertEquals(multipleRuns.removeMin().getKey(), 0, 0.0); // 1 2
-        
-
 
         multipleRuns.removeMin(); // 2
-        multipleRuns.removeMin(); // 
+        multipleRuns.removeMin(); //
         assertNull(multipleRuns.removeMin()); // nothing to remove
 
         multipleRuns.insert(3); // 3
-        multipleRuns.removeMin(); //         
-        
+        multipleRuns.removeMin(); //
+
         LinkedList<Integer> ll = multipleRuns.getRunInfo();
         assertTrue(ll.getHead().getElement() == 3);
         assertTrue(ll.getHead().getNext().getElement() == 3);
         assertTrue(ll.getHead().getNext().getNext().getElement() == 1);
         assertNull(ll.getHead().getNext().getNext().getNext());
     }
+
 
     /**
      * testing a heap where the input record is reversed

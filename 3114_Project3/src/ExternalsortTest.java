@@ -12,6 +12,8 @@ public class ExternalsortTest extends student.TestCase {
      * @throws IOException if file doesn't exist
      */
     public void testMain() throws IOException {
+        GenBinaryDataFile.generateReverseSorted("src/reverse20.bin", 20);
+        
         Externalsort.main(new String[] {"src/reverse20.bin"});
         
         assertTrue(systemOut().getHistory().contains(

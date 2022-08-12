@@ -14,12 +14,23 @@ import java.nio.ByteBuffer;
 public class BlockTest extends student.TestCase {
     private Block block;
 
+
     /**
      * setting up the tests
      */
     public void setUp() throws IOException {
+        GenBinaryDataFile.generateSorted("sorted.bin", 1);
+
+    }
+
+
+    /**
+     * testing getRecords
+     * @throws IOException 
+     */
+    public void testGetRecords() throws IOException {
         FileInputStream fileInputStream = new FileInputStream(new File(
-            "src/sorted.bin"));
+            "sorted.bin"));
         BufferedInputStream inputStream = new BufferedInputStream(
             fileInputStream);
 
@@ -28,14 +39,6 @@ public class BlockTest extends student.TestCase {
         if (inputStream.read(dataArray) != -1) {
             block = new Block(dataArray);
         }
-
-    }
-
-
-    /**
-     * testing getRecords
-     */
-    public void testGetRecords() {
         assertEquals(block.getRecords()[0].getKey(), 0, 0.0);
         assertEquals(block.getRecords()[511].getKey(), 511, 0.0);
 
@@ -44,8 +47,19 @@ public class BlockTest extends student.TestCase {
 
     /**
      * testing toString
+     * @throws IOException 
      */
-    public void testToString() {
+    public void testToString() throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(new File(
+            "sorted.bin"));
+        BufferedInputStream inputStream = new BufferedInputStream(
+            fileInputStream);
+
+        ByteBuffer buffer = ByteBuffer.allocate(8192);
+        byte[] dataArray = buffer.array();
+        if (inputStream.read(dataArray) != -1) {
+            block = new Block(dataArray);
+        }
         System.out.print(block.toString());
         assertTrue(systemOut().getHistory().contains("498.0 499.0"));
         assertTrue(systemOut().getHistory().contains("511.0"));

@@ -15,7 +15,7 @@ public class OutputBufferTest extends student.TestCase {
      * setting up the tests
      */
     public void setUp() throws FileNotFoundException {
-        outputBuffer = new OutputBuffer("src/runFile.bin");
+        outputBuffer = new OutputBuffer("runFile.bin");
     }
 
 
@@ -43,23 +43,26 @@ public class OutputBufferTest extends student.TestCase {
 
         outputBuffer.addRecord(new Record(1000, Long.valueOf(0)));
         assertEquals(outputBuffer.getSize(), 1);
-
-        InputBuffer inputBuffer = new InputBuffer("src/runFile.bin");
-
+        outputBuffer.write();
+        InputBuffer inputBuffer = new InputBuffer("runFile.bin");
+        outputBuffer.closeFile();
         assertEquals(inputBuffer.readRecord().getKey(), 10, 0.0);
 
     }
 
-
+    /**
+     * testing outputbuffer
+     * @throws IOException when file doesn't exist
+     */
     public void testOB() throws IOException {
-        OutputBuffer oB = new OutputBuffer("src/finaltesting.bin");
+        OutputBuffer oB = new OutputBuffer("finaltesting.bin");
         for (int x = 0; x < 2048; x++) {
             oB.addRecord(new Record(x, Long.valueOf(5)));
         }
         System.out.print(oB.isFull());
         System.out.println();
 
-        InputBuffer iB = new InputBuffer("src/finaltesting.bin");
+        InputBuffer iB = new InputBuffer("finaltesting.bin");
         int count = 0;
         while (iB.moreToRead() || iB.getAvaliable() >= 16) {
             count++;
