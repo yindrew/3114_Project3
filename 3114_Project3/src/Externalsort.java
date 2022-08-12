@@ -20,18 +20,14 @@ import java.io.IOException;
 // letter of this restriction.
 
 /**
- * @version 2022.08.10
+ * external sort
  * @author yindrew hadenlee
- *
+ * @version 2022.08.10
  */
 public class Externalsort {
     public static void main(String args[]) throws IOException {
 
-        if (args.length == 1) {
-
-            new Processor(args[0]);
-
-        }
+        new Processor(args[0]);
 
     }
 }

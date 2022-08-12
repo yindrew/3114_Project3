@@ -106,7 +106,7 @@ public class GenBinaryDataFile {
         Random randGen = new Random();
 
         for (int i = numRecords; i > 0; i--) {
-            long value = randGen.nextLong();
+            long value = Long.valueOf(i);
             double key = (double)i;
 
             dos.writeLong(value);

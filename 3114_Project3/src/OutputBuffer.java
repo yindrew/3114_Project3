@@ -49,11 +49,11 @@ public class OutputBuffer {
     /**
      * add record
      * 
-     * @param record
-     * @throws IOException
+     * @param record record to be added 
+     * @throws IOException when error
      */
     public void addRecord(Record record) throws IOException {
-        if (size == capacity) {
+        if (isFull()) {
 
             write();
             size = 0;
@@ -63,10 +63,17 @@ public class OutputBuffer {
         size++;
     }
 
+    /**
+     * returns if the file is full;
+     * @return if file is full
+     */
+    public boolean isFull() {
+        return (size == capacity);
+    }
 
     /**
      * closes file
-     * @throws IOException
+     * @throws IOException when error
      */
     public void closeFile() throws IOException {
         this.file.close();

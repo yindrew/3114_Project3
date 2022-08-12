@@ -12,6 +12,8 @@ public class InputBufferTest extends student.TestCase {
     private InputBuffer inputBuffer2;
     private InputBuffer inputBuffer3;
     private InputBuffer inputBuffer4;
+    private InputBuffer inputBuffer5;
+
     private InputBuffer iB5;
     private InputBuffer iB6;
 
@@ -23,7 +25,8 @@ public class InputBufferTest extends student.TestCase {
         inputBuffer2 = new InputBuffer("src/sorted2Blocks.bin");
         inputBuffer3 = new InputBuffer("src/reverseSorted2Block.bin");
         inputBuffer4 = new InputBuffer("src/reverseSorted2Block.bin");
-        
+        inputBuffer5 = new InputBuffer("src/reverse20multi.bin");
+
         iB5 = new InputBuffer("src/random.bin");
         iB6 = new InputBuffer("src/random.bin");
 
@@ -44,7 +47,7 @@ public class InputBufferTest extends student.TestCase {
         iB5.getBufferInfo()[0]++;
         iB5.getBufferInfo()[0]++;
         assertEquals(iB5.getBufferInfo()[0], 2.0, 0.0);
-
+        System.out.println();
     }
 
 
@@ -115,4 +118,18 @@ public class InputBufferTest extends student.TestCase {
 
     }
 
+    
+    /**
+     * testing the read block method a little more
+     * 
+     * @throws IOException
+     *             when input file doesn't read
+     */
+    public void testReadBlock3() throws IOException {
+        InputBuffer iB = new InputBuffer("src/reverseSorted2Block.bin");
+        System.out.println();
+        while(iB.moreToRead() || iB.getAvaliable() >= 16) {
+            iB.readRecord().printOut();
+        }
+    }
 }

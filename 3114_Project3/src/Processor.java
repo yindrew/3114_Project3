@@ -1,6 +1,10 @@
 import java.io.File;
 import java.io.IOException;
-
+/**
+ * processor class
+ * @author yindrew
+ * @version 2022.08.11
+ */
 public class Processor {
 
     //field
@@ -9,14 +13,17 @@ public class Processor {
     private String tempFileName;
     private int tempName = 0;
     
-    
+    /**
+     * constructor 
+     * @param fileName file to be processed
+     * @throws IOException file doesn't exist
+     */
     public Processor(String fileName) throws IOException {
         
         this.sortedFileName = fileName;
-        sortedFileName = fileName;
         int random = (int) (Math.random() * 100);
-        RS = new ReplacementSelection(fileName, "src/" + random + ".bin");
-        tempFileName = "src/" + random + ".bin";
+        RS = new ReplacementSelection(fileName, "src/processorTest.bin");
+        tempFileName = "src/processorTest.bin";
         RS.getRuns();
 
         LinkedList<Integer> temp = RS.runsInfo();
@@ -39,7 +46,7 @@ public class Processor {
     public void delRename() {
         File file = new File(this.sortedFileName);
         
-        //delete original file
+        //delete original fileget
         file.delete();
         
         File oldName = new File(tempFileName);
@@ -53,11 +60,11 @@ public class Processor {
 
     
     /**
-     * processes runInfo
-     * 
-     * @param runsInfo2
-     *            array that shows the different runs
-     * @throws IOException 
+     * processes merge
+     * @param runsInfo linked list of run info
+     * @param tempFileName temporary file
+     * @return updated run info
+     * @throws IOException if file doesn't exist
      */
     public LinkedList<Integer> mergeProcessor(LinkedList<Integer> runsInfo, String tempFileName) throws IOException {
 
@@ -70,11 +77,13 @@ public class Processor {
         int[] recordsInfo = runsInfo.toArray();
         
         MultiWayMerge merge = new MultiWayMerge(tempFileName, "src/" + tempName +".bin", runsInfo);
+        
+        //eight way
         for (int i = 0; i < eightWay; i++) {
             merge.merge(8, i * 8); 
             
             int sum = 0;
-            for(int x = i; x < 8 + i; x++) {
+            for(int x = i * 8; x < i * 8 + 8; x++) {
                 sum += recordsInfo[x];
             }
             ret.add(sum);
@@ -82,20 +91,16 @@ public class Processor {
             
         }
 
+        //remainder 
         merge.merge(remainder, runsNum - remainder);
         int sum = 0;
         for(int i = runsNum - remainder; i < runsNum; i++) {
-            sum += recordsInfo[i];
-            
-            
+            sum += recordsInfo[i];  
         }
-        
         ret.add(sum);
         
         this.tempFileName = "src/" + tempName +".bin";
-
         tempName++;
-        
         return ret;
 
     }
@@ -104,7 +109,7 @@ public class Processor {
      * print
      * @param sortedFileName
      *          sorted file name
-     * @throws IOException
+     * @throws IOException when error occurs
      */
     public void print(String sortedFileName) throws IOException {
         InputBuffer IB = new InputBuffer(sortedFileName);
@@ -143,6 +148,5 @@ public class Processor {
             blockCounter++;
             printCounter++;
         }
-        System.out.println(count);
     }
 }

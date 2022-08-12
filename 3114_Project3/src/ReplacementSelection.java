@@ -19,25 +19,19 @@ public class ReplacementSelection {
      * @throws IOException
      *             when error with input/output files
      */
-    public ReplacementSelection(String inFile, String outputFile) throws IOException {
+    public ReplacementSelection(String inFile, String outputFile)
+        throws IOException {
         inputBuffer = new InputBuffer(inFile);
         outputBuffer = new OutputBuffer(outputFile);
 
         // filled heap - phase 1
-        while (!minHeap.isFull() && inputBuffer.getAvaliable() >= 16) {
-            minHeap.insert(inputBuffer.readBlock().getRecords());
+        while (!minHeap.isFull() && (inputBuffer.getAvaliable() >= 16
+            || inputBuffer.moreToRead())) {
+            minHeap.insert(inputBuffer.readRecord());
         }
 
     }
-    
-    /**
-     * getting runs info
-     * @return runs info
-     */
-    public LinkedList<Integer> runsInfo() {
-        return minHeap.getRunInfo();
-        
-    }
+
 
     /**
      * get the runs of the file
@@ -51,7 +45,6 @@ public class ReplacementSelection {
             if (minHeap.isFull()) {
                 Record record = minHeap.removeMin();
                 outputBuffer.addRecord(record);
-                //record.printOut();
             }
             else {
                 minHeap.insert(inputBuffer.readRecord());
@@ -59,25 +52,36 @@ public class ReplacementSelection {
         }
 
         // finishing up the last bits - phase 3
+
         cleanUp();
-
+        outputBuffer.write();
         outputBuffer.closeFile();
-
     }
 
 
     /**
      * clean up the end of the file
-     * @throws IOException when input is empty
+     * 
+     * @throws IOException
+     *             when input is empty
      */
     private void cleanUp() throws IOException {
         while (!minHeap.isEmpty()) {
             Record record = minHeap.removeMin();
-            outputBuffer.addRecord(record);    
-            //record.printOut();
-
+            outputBuffer.addRecord(record);
 
         }
+    }
+
+
+    /**
+     * getting runs info
+     * 
+     * @return runs info
+     */
+    public LinkedList<Integer> runsInfo() {
+        return minHeap.getRunInfo();
+
     }
 
 }
