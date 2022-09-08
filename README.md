@@ -1,6 +1,6 @@
 # ExternalSort - An external sorting program
 
-We start our project off facing resource constraints. Our input buffer and output buffer can only be 8196 bytes. Our memory storage can store 65536 byes. We are then given a large file filled with numbers that we would have to sort from smallest to largest. We replace the original unsorted file with the newly sorted file.
+We start our project off facing resource constraints. Our input buffer and output buffer can only be 8196 bytes. Our memory storage can store 65536 bytes. We are then given a large file filled with numbers that we would have to sort from smallest to largest. We replace the original unsorted file with the newly sorted file.
 
 ### Step One - Replacement Selection
 
